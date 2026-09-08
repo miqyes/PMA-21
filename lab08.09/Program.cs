@@ -11,24 +11,19 @@ string[] parts = inputText.Split(',');
 int first = Convert.ToInt32(parts[0]);
 int second = Convert.ToInt32(parts[1]);
 
+int Fib(int n)
+{
+    if (n == 0) return first;
+    if (n == 1) return second;
+    return Fib(n - 1) + Fib(n - 2);
+}
+
 List<int> result = new List<int>();
 
-if (count >= 1)
+for (int i = 0; i < count; i++)
 {
-    result.Add(first);
+    result.Add(Fib(i));
 }
-
-if (count >= 2)
-{
-    result.Add(second);
-}
-
-for (int i = 2; i < count; i++)
-{
-    result.Add(result[i - 1] + result[i - 2]);
-}
-
-string outputText = string.Join(",", result);
-File.WriteAllText("output.txt", outputText);
 
 Console.WriteLine("Saved in output.txt");
+File.WriteAllText("output.txt", string.Join(", ", result));
