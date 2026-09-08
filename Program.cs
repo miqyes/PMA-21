@@ -47,7 +47,6 @@ namespace fibonacci
 
             string result = string.Join(",", list);
             File.WriteAllText("output.txt", result);
-            Console.WriteLine(Path.GetFullPath("output.txt"));
             Console.WriteLine(result);
         }
     }
