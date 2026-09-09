@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
 using System.Text;
@@ -7,15 +8,13 @@ class Program
 {
     static void Main()
     {
-        // Шляхи
         string inputPath = "input.txt";
         string stepsPath = "steps.txt";
         string outputPath = "output.txt";
 
-        // Переірка на наявність файлів
         if (!File.Exists(inputPath) || !File.Exists(stepsPath))
         {
-            Console.WriteLine("[ERROR]: Input files dosen`t exist.");
+            Console.WriteLine("[ERROR]: Input files doesn't exist.");
             return;
         }
 
@@ -31,46 +30,21 @@ class Program
         }
 
         string stepsContent = File.ReadAllText(stepsPath).Trim();
-        if (!long.TryParse(stepsContent, out long steps) || steps <= 0)
+        if (!int.TryParse(stepsContent, out int steps) || steps <= 0)
         {
-            Console.WriteLine("[ERROR]: steps.txt must contain one number.");
+            Console.WriteLine("[ERROR]: steps.txt must contain a positive integer.");
             return;
         }
 
         Console.WriteLine($"Start numbers: {num1}, {num2}");
         Console.WriteLine($"Count of elements: {steps}");
 
-        GenerateFibonacciStream1(num1, num2, steps, outputPath);
+        FibonacciGenerator generator = new FibonacciGenerator(num1, num2, steps);
 
-    }
-    static void GenerateFibonacciStream1(BigInteger a, BigInteger b, long steps, string outputPath)
-    {
-        if (steps <= 0) return;
+        List<BigInteger> fibonacciList = generator.Generate();
 
-        const int streamBufferSize = 8 * 1024 * 1024;
+        generator.SaveToFile(fibonacciList, outputPath);
 
-        using var fs = new FileStream(outputPath, FileMode.Create, FileAccess.Write, FileShare.None, streamBufferSize);
-        using var writer = new StreamWriter(fs, System.Text.Encoding.ASCII, streamBufferSize);
-
-        writer.Write(a);
-
-        long progressStep = steps / 100 == 0 ? 1 : steps / 100;
-
-        for (long i = 2; i <= steps; i++)
-        {
-            writer.Write(',');
-            writer.Write(b);
-
-            BigInteger next = a + b;
-            a = b;
-            b = next;
-
-            if (i % progressStep == 0)
-            {
-                Console.Write($"\r[Processing]: {i * 100 / steps}% (step: {i})");
-            }
-        }
-
-        Console.WriteLine($"\n[Done] Result succesfuly saved to {outputPath}");
+        Console.WriteLine($"[Done] Result successfully saved to {outputPath}");
     }
 }
