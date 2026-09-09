@@ -7,10 +7,12 @@ class Program
 {
     static void Main()
     {
+        // Шляхи
         string inputPath = "input.txt";
         string stepsPath = "steps.txt";
         string outputPath = "output.txt";
 
+        // Переірка на наявність файлів
         if (!File.Exists(inputPath) || !File.Exists(stepsPath))
         {
             Console.WriteLine("[ERROR]: Input files dosen`t exist.");
@@ -31,7 +33,7 @@ class Program
         string stepsContent = File.ReadAllText(stepsPath).Trim();
         if (!long.TryParse(stepsContent, out long steps) || steps <= 0)
         {
-            Console.WriteLine("[ERROR]: steps.txt повинен містити додатне ціле число.");
+            Console.WriteLine("[ERROR]: steps.txt must contain one number.");
             return;
         }
 
