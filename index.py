@@ -11,13 +11,13 @@ num1 = int(parts[0])
 num2 = int(parts[1])
 steps = int(text_steps)
 
-result = []
-result.append(num1)
-result.append(num2)
+def make_fib(a, b, k):
+    if k <= 0:
+        return []
+    next_n = a + b
+    return [next_n] + make_fib(b, next_n, k - 1)
 
-for i in range(steps - 2):
-    next_num = result[-1] + result[-2]
-    result.append(next_num)
+result = [num1, num2] + make_fib(num1, num2, steps - 2)
 
 out_text = ""
 for i in range(len(result)):
