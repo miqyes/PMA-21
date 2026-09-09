@@ -1,11 +1,9 @@
 file_in = open('input.txt', 'r')
 text_in = file_in.read()
 file_in.close()
-
 file_steps = open('steps.txt', 'r')
 text_steps = file_steps.read()
 file_steps.close()
-
 parts = text_in.split(',')
 num1 = int(parts[0])
 num2 = int(parts[1])
