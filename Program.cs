@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
@@ -7,19 +7,55 @@ namespace Task1
 {
     class Program
     {
+        public static int[] readNumbers(string path)
+        {
+            string[] numbers = File.ReadAllText(path).Split();
+            int[] ints = new int[numbers.Length];
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                ints[i] = int.Parse(numbers[i]);
+            }
+            return ints;
+        }
+        public static int readStep(string path)
+        {
+            string number = File.ReadAllText(path);
+            int step = int.Parse(number);
+            return step;
+        }
+        public static void writeFibonacci(string path, List<int> fib, List<int> fiblimit)
+        {
+            File.WriteAllText(path, string.Join(" ", fib));
+            File.AppendAllText(path, "\n" + string.Join(" ", fiblimit));
+        }
         static void Main(string[] args)
         {
-            string input1 = "C:\\Users\\Користувач\\source\\repos\\Fibonacci\\input.txt";
-            string input2 = "C:\\Users\\Користувач\\source\\repos\\Fibonacci\\step.txt";
+           
 
-            int[] numbers = Fibonacci.readNumbers(input1);
-            int step = Fibonacci.readStep(input2);
+        string input1 = "input.txt";
+            string input2 = "step.txt";
+            string input3 = "limit.txt";
+
+            int[] numbers = readNumbers(input1);
+            int step = readStep(input2);
+            int limit = readStep(input3);
 
             List<int> fib = new List<int>();
-            Fibonacci.CalculateFibonacci(numbers[0], numbers[1], 1, step, fib);
+            fib.Add(numbers[0]);    
+            fib.Add(numbers[1]);    
+           Fibonacci.CalculateFibonacci(step, fib);
 
-            string output = "C:\\Users\\Користувач\\source\\repos\\Fibonacci\\output.txt";
-            Fibonacci.writeFibonacci(output, fib);
+            List<int> fiblimit = new List<int>();
+            fiblimit.Add(numbers[0]);
+            fiblimit.Add(numbers[1]);
+            Fibonacci.CalculateFibonacciLimitations(limit, fiblimit);
+
+            string output = "output.txt";
+            Console.WriteLine("Finish");
+           writeFibonacci(output, fib, fiblimit);
+            
+
+
         }
     }
 }
