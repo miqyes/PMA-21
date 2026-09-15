@@ -1,41 +1,42 @@
-class FibonacciCalculator
+using System;
+using System.Collections.Generic;
+
+class Program
 {
-    static int Fibonacci(int n, int first, int second)
-    {
-        if (n == 0)
-        {
-            return first;
-        }
-
-        if (n == 1)
-        {
-            return second;
-        }
-
-        return Fibonacci(n - 1, first, second) + Fibonacci(n - 2, first, second);
-    }
-
     static void Main(string[] args)
     {
-        string filePath = "input.txt";
-        string[] lines = File.ReadAllLines(filePath);
+        string inputPath = "input.txt";
+        string limitPath = "limit.txt";
+        string outputPath = "output.txt";
 
-        int first = int.Parse(lines[0]);
-        int second = int.Parse(lines[1]);
-        int count = int.Parse(lines[2]);
+        int[] initialNumbers = FileManager.GetInitialNumbersFromFile(inputPath);
+        int first = initialNumbers[0];
+        int second = initialNumbers[1];
 
-        int total = 2 + count;
+        int limit = FileManager.GetLimitNumberFromFile(limitPath);
 
-        for (int i = 0; i < total; i++)
+        if (first > limit)
         {
-            Console.Write(Fibonacci(i, first, second));
+            Console.WriteLine("Помилка: перше число більше за заданий ліміт.");
 
-            if (i < total - 1)
-            {
-                Console.Write(", ");
-            }
+            FileManager.SaveResultToFile(outputPath, new List<int>());
+
+            return;
         }
 
-        Console.WriteLine();
+        List<int> numbers = [first];
+
+        if (second <= limit)
+        {
+            numbers.Add(second);
+
+            numbers = Calculator.Fibonacci(limit, numbers);
+        }
+        else
+        {
+            Console.WriteLine("Друге число більше за ліміт, тому воно не буде додане до списку.");
+        }
+    
+        FileManager.SaveResultToFile(outputPath, numbers);
     }
 }
