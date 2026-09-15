@@ -6,7 +6,6 @@ class Program
 {
     static float[][] getvectors(string filepath)
     {
-        // Зчитуємо рядки з файлу та ділимо по комі з пробілом
         float[][] data = File.ReadAllLines(filepath)
             .Select(line => line.Split(", ").Select(num => float.Parse(num)).ToArray())
             .ToArray();
@@ -65,7 +64,6 @@ class Program
 
         float[][] allVectors = getvectors(input);
 
-        // Витягуємо перший та другий вектори з файлу
         float[] a = allVectors[0];
         float[] b = allVectors[1];
 
@@ -75,7 +73,6 @@ class Program
         log += parsevector(a) + " * " + parsevector(b) + " = " + parsevector(multi(a, b)) + "\n";
         log += parsevector(a) + " / " + parsevector(b) + " = " + parsevector(div(a, b)) + "\n";
 
-        // Записуємо результати у файл
         File.WriteAllText(output, log);
     }
 }
