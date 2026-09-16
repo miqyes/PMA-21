@@ -35,6 +35,6 @@ class Program {
         var resultList = Fibonachi.FibCalculate(list, steps[0]);
 
         File.WriteAllText("result.txt", "[" + string.Join(", ", resultList) + "]");
-        Console.WriteLine($"Дані успішно записано у файл resuly.txt. Застосований ліміт: {limit[0]}");
+        Console.WriteLine($"Ряд успішно записано у файл resuly.txt. Застосований ліміт: {limit[0]}");
     }
 }
