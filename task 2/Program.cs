@@ -6,14 +6,16 @@ namespace task_2
         private const string StepsFile = "steps.txt";
         private const string OutputFile = "output.txt";
 
-        static int Main()
+        static void Main()
         {
             List<int> numbers = File.ReadAllText(InputFile)
                 .Split(',')
                 .Select(int.Parse)
                 .ToList();
 
-            int stepCount = Fibonacci.GetLimit(StepsFile);
+            int stepCount = File.ReadLines(StepsFile)
+                .Select(int.Parse)
+                .First();
 
             List<int> result = Fibonacci.FibValue(numbers, stepCount);
 
@@ -21,8 +23,6 @@ namespace task_2
             File.WriteAllText(OutputFile, outputText);
 
             Console.WriteLine(outputText);
-
-            return 0;
         }
     }
 }

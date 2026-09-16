@@ -2,24 +2,18 @@ namespace task_2
 {
     public static class Fibonacci
     {
-        private const int Limit = 100;
-
-        private static void ValidateLimit(int stepCount)
+        public static List<int> GetLimit(List<int> val, int limit)
         {
-            if (stepCount > Limit)
+            int next = val[^1] + val[^2];
+
+            if (next > limit)
             {
-                throw new ArgumentException($"Amount of steps ({stepCount}) is greater than {Limit}");
+                return val;
             }
-        }
 
-        public static int GetLimit(string stepPath)
-        {
-            int stepCount = File.ReadLines(stepPath)
-                .Select(int.Parse)
-                .First();
+            val.Add(next);
 
-            ValidateLimit(stepCount);
-            return stepCount;
+            return GetLimit(val, limit);
         }
 
         public static List<int> FibValue(List<int> val, int stepCount)
