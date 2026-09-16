@@ -5,38 +5,45 @@ class Program
 {
     static void Main(string[] args)
     {
-        string inputPath = "input.txt";
-        string limitPath = "limit.txt";
-        string outputPath = "output.txt";
 
-        int[] initialNumbers = FileManager.GetInitialNumbersFromFile(inputPath);
+        int[] initialNumbers = FileManager.GetInitialNumbersFromFile();
         int first = initialNumbers[0];
         int second = initialNumbers[1];
 
-        int limit = FileManager.GetLimitNumberFromFile(limitPath);
+        int limit = FileManager.GetLimitNumberFromFile();
+        int count = FileManager.GetCountFromFile();
 
         if (first > limit)
         {
             Console.WriteLine("Помилка: перше число більше за заданий ліміт.");
 
-            FileManager.SaveResultToFile(outputPath, new List<int>());
+            FileManager.SaveResultToFile(new List<string>());
 
             return;
         }
 
-        List<int> numbers = [first];
+        List<int> numbersByLimit = [first];
 
         if (second <= limit)
         {
-            numbers.Add(second);
+            numbersByLimit.Add(second);
 
-            numbers = Calculator.Fibonacci(limit, numbers);
+            numbersByLimit = Calculator.FibonacciByLimit(limit, numbersByLimit);
         }
         else
         {
             Console.WriteLine("Друге число більше за ліміт, тому воно не буде додане до списку.");
         }
-    
-        FileManager.SaveResultToFile(outputPath, numbers);
+
+        List<int> numbersByCount = [first, second];
+        numbersByCount = Calculator.FibonacciByCount(count, numbersByCount);
+
+        List<string> outputLines =
+        [
+            string.Join(", ", numbersByLimit),
+            string.Join(", ", numbersByCount)
+        ];
+
+        FileManager.SaveResultToFile(outputLines);
     }
 }

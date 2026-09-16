@@ -3,9 +3,14 @@ using System.Collections.Generic;
 
 class FileManager
 {
-    public static int[] GetInitialNumbersFromFile(string filePath)
+    const string INPUT_FILE = "input.txt";
+    const string LIMIT_FILE = "limit.txt";
+    const string COUNT_FILE = "count.txt";  
+    const string OUTPUT_FILE = "output.txt";
+
+    public static int[] GetInitialNumbersFromFile()
     {
-        string[] lines = File.ReadAllLines(filePath);
+        string[] lines = File.ReadAllLines(INPUT_FILE);
 
         int first = int.Parse(lines[0]);
         int second = int.Parse(lines[1]);
@@ -13,19 +18,23 @@ class FileManager
         return [first, second];
     }
 
-    public static int GetLimitNumberFromFile(string filePath)
+    public static int GetLimitNumberFromFile()
     {
-        string text = File.ReadAllText(filePath).Trim();
+        string text = File.ReadAllText(LIMIT_FILE).Trim();
 
         return int.Parse(text);
     }
 
-    public static void SaveResultToFile(string filePath, List<int> numbers)
+    public static int GetCountFromFile()
     {
-        string textToWrite = string.Join(", ", numbers);
+        string text = File.ReadAllText(COUNT_FILE).Trim();
+        return int.Parse(text);
+    }
 
-        File.WriteAllText(filePath, textToWrite);
+    public static void SaveResultToFile(List<string> lines)
+    {
+        File.WriteAllLines(OUTPUT_FILE, lines);
 
-        Console.WriteLine("Результат збережено у " + filePath);
+        Console.WriteLine("Результат збережено у " + OUTPUT_FILE);
     }
 }

@@ -3,27 +3,28 @@ using System.Collections.Generic;
 
 class FileManager
 {
+    const string SEPARATOR = " ";
     public static double[][] LoadVectorFromFile(string filePath)
     {
         string[] lines = File.ReadAllLines(filePath);
 
-        string[] parts1 = lines[0].Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        double[] v1 = new double[parts1.Length];
+        string[] partsOne = lines[0].Split(SEPARATOR, StringSplitOptions.RemoveEmptyEntries);
+        double[] vectorOne = new double[partsOne.Length];
 
-        for (int i = 0; i < parts1.Length; i++)
+        for (int i = 0; i < partsOne.Length; i++)
         {
-            v1[i] = double.Parse(parts1[i]);
+            vectorOne[i] = double.Parse(partsOne[i]);
         }
 
-        string[] parts2 = lines[1].Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        double[] v2 = new double[parts2.Length];
-        
-        for (int i = 0; i < parts2.Length; i++)
+        string[] partsTwo = lines[1].Split(SEPARATOR, StringSplitOptions.RemoveEmptyEntries);
+        double[] vectorTwo = new double[partsTwo.Length];
+
+        for (int i = 0; i < partsTwo.Length; i++)
         {
-            v2[i] = double.Parse(parts2[i]);
+            vectorTwo[i] = double.Parse(partsTwo[i]);
         }
 
-        return [v1, v2];
+        return [vectorOne, vectorTwo];
     }
 
     public static void SaveResultToFile(string filePath, List<string> results)
