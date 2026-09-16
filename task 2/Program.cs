@@ -1,29 +1,26 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
-
-string text = File.ReadAllText("input.txt");
-string[] parts = text.Split(',');
-
-int a = int.Parse(parts[0].Trim());
-int b = int.Parse(parts[1].Trim());
-
-int steps = int.Parse(File.ReadAllText("steps.txt").Trim());
-
-List<int> row = new List<int>();
-
-if (steps >= 1)
-    row.Add(a);
-if (steps >= 2)
-    row.Add(b);
-
-for (int i = 2; i < steps; i++)
+namespace task_2
 {
-    row.Add(row[i - 1] + row[i - 2]);
+    class Program
+    {
+        static int Main()
+        {
+            string inputText = File.ReadAllText("input.txt").Trim();
+            string[] parts = inputText.Split(',');
+            List<int> numbers = new List<int>
+            {
+                int.Parse(parts[0].Trim()),
+                int.Parse(parts[1].Trim())
+            };
+            int stepCount = Fibonacci.GetLimit("steps.txt");
+
+            List<int> result = Fibonacci.FibValue(numbers, stepCount);
+
+            string outputText = string.Join(",", result);
+            File.WriteAllText("output.txt", outputText);
+
+            Console.WriteLine(outputText);
+
+            return 0;
+        }
+    }
 }
-
-string result = string.Join(",", row);
-
-File.WriteAllText("output.txt", result);
-
-Console.WriteLine("Результат: " + result);
