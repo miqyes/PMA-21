@@ -14,29 +14,18 @@ public static class FibonacciGenerator
         if (count <= 0)
             return new List<BigInteger>();
 
-        List<BigInteger> result = new List<BigInteger>(count);
-        result.Add(seedNumbers[0]);
+        if (count == 1)
+            return new List<BigInteger> { seedNumbers[0] };
 
-        if (count > 1)
-        {
-            result.Add(seedNumbers[1]);
-            GenerateRecursive(seedNumbers[0], seedNumbers[1], count - 2, result);
-        }
+        if (count == 2)
+            return new List<BigInteger> { seedNumbers[0], seedNumbers[1] };
 
-        return result;
+        List<BigInteger> list = Generate(seedNumbers, count - 1);
+
+        list.Add(list[^1] + list[^2]);
+
+        return list;
     }
-
-    private static void GenerateRecursive(BigInteger a, BigInteger b, int remaining, List<BigInteger> result)
-    {
-        if (remaining <= 0)
-            return;
-
-        BigInteger next = a + b;
-        result.Add(next);
-
-        GenerateRecursive(b, next, remaining - 1, result);
-    }
-
     public static void SaveToFile(List<BigInteger> numbers, string filePath)
     {
         const int bufferSize = 8 * 1024 * 1024;
