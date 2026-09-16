@@ -4,59 +4,48 @@ using System.IO;
 using System.Numerics;
 using System.Text;
 
-public class FibonacciGenerator
+public static class FibonacciGenerator
 {
-    private BigInteger first;
-    private BigInteger second;
-    private int count;
-
-    public FibonacciGenerator(BigInteger first, BigInteger second, int count)
+    public static List<BigInteger> Generate(IReadOnlyList<BigInteger> seedNumbers, int count)
     {
-        this.first = first;
-        this.second = second;
-        this.count = count;
-    }
-
-    public List<BigInteger> Generate()
-    {
-        List<BigInteger> result = new List<BigInteger>(count);
+        if (seedNumbers == null || seedNumbers.Count < 2)
+            throw new ArgumentException("seedNumbers must contain >=2.", nameof(seedNumbers));
 
         if (count <= 0)
-            return result;
+            return new List<BigInteger>();
 
-        result.Add(first);
-        if (count == 1)
-            return result;
+        List<BigInteger> result = new List<BigInteger>(count);
+        result.Add(seedNumbers[0]);
 
-        result.Add(second);
-
-        BigInteger a = first;
-        BigInteger b = second;
-
-        for (int i = 2; i < count; i++)
+        if (count > 1)
         {
-            BigInteger next = a + b;
-            result.Add(next);
-            a = b;
-            b = next;
+            result.Add(seedNumbers[1]);
+            GenerateRecursive(seedNumbers[0], seedNumbers[1], count - 2, result);
         }
 
         return result;
     }
 
-    public void SaveToFile(List<BigInteger> numbers, string filePath)
+    private static void GenerateRecursive(BigInteger a, BigInteger b, int remaining, List<BigInteger> result)
     {
-        int bufferSize = 8 * 1024 * 1024;
+        if (remaining <= 0)
+            return;
+
+        BigInteger next = a + b;
+        result.Add(next);
+
+        GenerateRecursive(b, next, remaining - 1, result);
+    }
+
+    public static void SaveToFile(List<BigInteger> numbers, string filePath)
+    {
+        const int bufferSize = 8 * 1024 * 1024;
 
         using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.ASCII, bufferSize))
         {
-            for (int i = 0; i < numbers.Count; i++)
+            if (numbers != null && numbers.Count > 0)
             {
-                if (i > 0)
-                {
-                    writer.Write(',');
-                }
-                writer.Write(numbers[i]);
+                writer.Write(string.Join(',', numbers));
             }
         }
     }

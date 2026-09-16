@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
-using System.Text;
 
 class Program
 {
@@ -14,7 +13,7 @@ class Program
 
         if (!File.Exists(inputPath) || !File.Exists(stepsPath))
         {
-            Console.WriteLine("[ERROR]: Input files doesn't exist.");
+            Console.WriteLine("[ERROR]: Input files don't exist.");
             return;
         }
 
@@ -25,7 +24,7 @@ class Program
             !BigInteger.TryParse(parts[0], out BigInteger num1) ||
             !BigInteger.TryParse(parts[1], out BigInteger num2))
         {
-            Console.WriteLine("[ERROR]: File input.txt must contain >=2 symbols.");
+            Console.WriteLine("[ERROR]: File input.txt must contain at least 2 valid numbers.");
             return;
         }
 
@@ -39,11 +38,11 @@ class Program
         Console.WriteLine($"Start numbers: {num1}, {num2}");
         Console.WriteLine($"Count of elements: {steps}");
 
-        FibonacciGenerator generator = new FibonacciGenerator(num1, num2, steps);
+        var seedNumbers = new List<BigInteger> { num1, num2 };
 
-        List<BigInteger> fibonacciList = generator.Generate();
+        List<BigInteger> fibonacciList = FibonacciGenerator.Generate(seedNumbers, steps);
 
-        generator.SaveToFile(fibonacciList, outputPath);
+        FibonacciGenerator.SaveToFile(fibonacciList, outputPath);
 
         Console.WriteLine($"[Done] Result successfully saved to {outputPath}");
     }
