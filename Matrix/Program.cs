@@ -1,4 +1,4 @@
-namespace Task3;
+﻿namespace Task3;
 class Program
 {
 public static int[][,] read() {
@@ -13,7 +13,21 @@ res[i] = new int[2, 2];
         for (int k = 0; k < 2; k++)
             res[i][j, k] = parts[index++]; } }
 return res; }
-
+public static void write<T>(string text, int[,] matrix1, int[,] matrix2, char operation, T[,] res)
+{
+    using (StreamWriter writer = new StreamWriter("result.txt", true))
+    {
+        writer.WriteLine(text);
+        char operation1 = '=';
+        for (int i = 0; i < 2; i++)
+        {
+            string op1 = i == 0 ? operation.ToString() : " ";
+            string op2 = i == 0 ? operation1.ToString() : " ";
+            writer.WriteLine(
+                $"{matrix1[i, 0]} {matrix1[i, 1]} {op1} {matrix2[i, 0]} {matrix2[i, 1]} {op2} {res[i, 0]} {res[i, 1]}");
+        }
+    }
+}
 static void Main() {
 File.WriteAllText("result.txt", "");
 Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -30,17 +44,17 @@ for (int i = 0; i < matrix.Length; i++) {
     }
 }
 int[,] adding = operation.add(matrix[0], matrix[2]);
-operation.write("Додавання 1 і 3 матриць", matrix[0], matrix[2], '+', adding);
+write("Додавання 1 і 3 матриць", matrix[0], matrix[2], '+', adding);
 
 int[,] differencing = operation.difference(matrix[1], matrix[3]);
-operation.write("Віднімання 2 і 4 матриці", matrix[1], matrix[3], '-', differencing);
+write("Віднімання 2 і 4 матриці", matrix[1], matrix[3], '-', differencing);
 
 int[,] multiplying = operation.multiply(matrix[4], matrix[5]);
-operation.write("Множення матриці 5 на матрицю 6", matrix[4], matrix[5], '*', multiplying);
+write("Множення матриці 5 на матрицю 6", matrix[4], matrix[5], '*', multiplying);
 try
 {
     double[,] dividing = operation.divide(matrix[6], matrix[7]);
-    operation.write("Ділення матриці 7 на матрицю 8", matrix[6], matrix[7], '/', dividing);
+    write("Ділення матриці 7 на матрицю 8", matrix[6], matrix[7], '/', dividing);
 }
 catch (Exception)
 {

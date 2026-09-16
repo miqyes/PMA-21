@@ -67,20 +67,6 @@ class operation
         return multiply(matrix1, reverse);
     }
 
-    public static void write<T>(string text, int[,] matrix1, int[,] matrix2, char operation, T[,] res)
-    {
-        using (StreamWriter writer = new StreamWriter("result.txt", true))
-        {
-            writer.WriteLine(text);
-            char operation1 = '=';
-            for (int i = 0; i < 2; i++)
-            {
-                string op1 = i == 0 ? operation.ToString() : " ";
-                string op2 = i == 0 ? operation1.ToString() : " ";
-                writer.WriteLine(
-                    $"{matrix1[i, 0]} {matrix1[i, 1]} {op1} {matrix2[i, 0]} {matrix2[i, 1]} {op2} {res[i, 0]} {res[i, 1]}");
-            }
-        }
-    }
+
 
 }
