@@ -29,21 +29,25 @@ class Program
         }
 
         string stepsContent = File.ReadAllText(stepsPath).Trim();
-        if (!int.TryParse(stepsContent, out int steps) || steps <= 0)
+        if (!BigInteger.TryParse(stepsContent, out BigInteger value) || value <= 0)
         {
-            Console.WriteLine("[ERROR]: steps.txt must contain a positive integer.");
+            Console.WriteLine("[ERROR]: steps.txt must contain a positive number.");
             return;
         }
 
         Console.WriteLine($"Start numbers: {num1}, {num2}");
-        Console.WriteLine($"Count of elements: {steps}");
 
-        var seedNumbers = new List<BigInteger> { num1, num2 };
+        var numbers = new List<BigInteger> { num1, num2 };
+        int count = (int)value;
 
-        List<BigInteger> fibonacciList = FibonacciGenerator.Generate(seedNumbers, steps);
 
-        FibonacciGenerator.SaveToFile(fibonacciList, outputPath);
+        Console.WriteLine($"Count of elements: {count}");
+        FibonacciGenerator.GenerateByCount(count, numbers);
 
-        Console.WriteLine($"[Done] Result successfully saved to {outputPath}");
+        // Console.WriteLine($"Max limit value: {value}");
+        // FibonacciGenerator.GenerateByLimit(value, numbers);
+        FibonacciGenerator.SaveToFile(numbers, outputPath);
+
+        Console.WriteLine($"[Done] Successfully saved {numbers.Count} numbers to {outputPath}");
     }
 }

@@ -2,30 +2,36 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
+using System.Security.Cryptography;
 using System.Text;
 
 public static class FibonacciGenerator
 {
-    public static List<BigInteger> Generate(IReadOnlyList<BigInteger> seedNumbers, int count)
+    public static void GenerateByCount(int count, List<BigInteger> numbers)
     {
-        if (seedNumbers == null || seedNumbers.Count < 2)
-            throw new ArgumentException("seedNumbers must contain >=2.", nameof(seedNumbers));
+        if (numbers == null || numbers.Count < 2 || numbers.Count >= count)
+            return;
 
-        if (count <= 0)
-            return new List<BigInteger>();
+        BigInteger next = numbers[numbers.Count - 1] + numbers[numbers.Count - 2];
+        numbers.Add(next);
 
-        if (count == 1)
-            return new List<BigInteger> { seedNumbers[0] };
-
-        if (count == 2)
-            return new List<BigInteger> { seedNumbers[0], seedNumbers[1] };
-
-        List<BigInteger> list = Generate(seedNumbers, count - 1);
-
-        list.Add(list[^1] + list[^2]);
-
-        return list;
+        GenerateByCount(count, numbers);
     }
+    public static void GenerateByLimit(BigInteger limit, List<BigInteger> numbers)
+    {
+        if (numbers == null || numbers.Count < 2)
+            return;
+
+        BigInteger next = numbers[numbers.Count - 1] + numbers[numbers.Count - 2];
+
+        if (next > limit)
+            return;
+
+        numbers.Add(next);
+
+        GenerateByLimit(limit, numbers);
+    }
+
     public static void SaveToFile(List<BigInteger> numbers, string filePath)
     {
         const int bufferSize = 8 * 1024 * 1024;
