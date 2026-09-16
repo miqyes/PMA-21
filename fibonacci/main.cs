@@ -41,13 +41,14 @@ class Program
         int count = (int)value;
 
 
-        Console.WriteLine($"Count of elements: {count}");
-        FibonacciGenerator.GenerateByCount(count, numbers);
+        //Console.WriteLine($"Count of elements: {count}");
+        //FibonacciGenerator.GenerateByCount(count, numbers);
 
-        // Console.WriteLine($"Max limit value: {value}");
-        // FibonacciGenerator.GenerateByLimit(value, numbers);
+        Console.WriteLine($"Max limit value: {value}");
+        FibonacciGenerator.GenerateByLimit(value, numbers);
+
+
         FibonacciGenerator.SaveToFile(numbers, outputPath);
-
         Console.WriteLine($"[Done] Successfully saved {numbers.Count} numbers to {outputPath}");
     }
 }

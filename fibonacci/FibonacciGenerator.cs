@@ -38,9 +38,12 @@ public static class FibonacciGenerator
 
         using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.ASCII, bufferSize))
         {
-            if (numbers != null && numbers.Count > 0)
+            writer.Write(numbers[0]);
+
+            for (int i = 1; i < numbers.Count; i++)
             {
-                writer.Write(string.Join(',', numbers));
+                writer.Write(',');
+                writer.Write(numbers[i]);
             }
         }
     }
