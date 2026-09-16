@@ -38,6 +38,14 @@ for (int i = 0; i < matrixs.Length; i++) {
 write("Додавання 1 і 3 матриць", matrixs[0], matrixs[2],   matrixs[0]+matrixs[2],'+');
 write("Віднімання 2 і 4 матриці" , matrixs[1], matrixs[3], matrixs[1]-matrixs[3],'-');
 write("Множення матриці 5 на матрицю 6" , matrixs[4], matrixs[5],matrixs[4]*matrixs[5],'*');
-write("Ділення матриці 7 на матрицю 8", matrixs[6], matrixs[7],   matrixs[6]/matrixs[7],'/');
+try
+{
+    write("Ділення матриці 7 на матрицю 8", matrixs[6], matrixs[7], matrixs[6] / matrixs[7], '/');
+}
+catch (Exception)
+{
+    File.AppendAllText("result.txt", "Ми не можемо поділити,бо визначник=0");
+}
+
 Console.WriteLine("Результат у файлі \"result.txt\""); 
 } }

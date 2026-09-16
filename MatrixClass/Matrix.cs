@@ -39,8 +39,9 @@ public class Matrix
     public static int determinant(Matrix matrix) {
         int determinant = (int)(matrix[0, 0] * matrix[1, 1] - matrix[0, 1] * matrix[1, 0]);
         if (determinant == 0)
-            throw new DivideByZeroException();
-        return determinant; }
+            throw new Exception("Визначник дорівнює 0");
+        return determinant;
+ }
     public static Matrix reverseMatrix(Matrix matrix)
     {
         int det = determinant(matrix);
