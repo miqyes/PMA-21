@@ -4,16 +4,21 @@ namespace task_2
     {
         private const int Limit = 100;
 
-        public static int GetLimit(string stepPath)
+        private static void ValidateLimit(int stepCount)
         {
-            string steps = File.ReadAllText(stepPath).Trim();
-            int stepCount = int.Parse(steps);
-
             if (stepCount > Limit)
             {
                 throw new ArgumentException($"Amount of steps ({stepCount}) is greater than {Limit}");
             }
+        }
 
+        public static int GetLimit(string stepPath)
+        {
+            int stepCount = File.ReadLines(stepPath)
+                .Select(int.Parse)
+                .First();
+
+            ValidateLimit(stepCount);
             return stepCount;
         }
 
