@@ -28,7 +28,8 @@ class Program
         double[,] matrix = new double[rows, cols];
         for (int i = 0; i < rows; i++)
         {
-            string[] rowsElement = lines[i].Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);            for (int j = 0; j < cols; j++)
+            string[] rowsElement = lines[i].Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);          
+            for (int j = 0; j < cols; j++)
             {
                 matrix[i, j] = Convert.ToDouble(rowsElement[j]);
             }
