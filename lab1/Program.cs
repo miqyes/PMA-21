@@ -18,7 +18,7 @@ namespace fibonacci
                 Console.WriteLine("Error: in file input.txt should be at least 2 numbers");
                 return;
             }
-
+            //linq
             int first = int.Parse(numbers[0]);
             int second = int.Parse(numbers[1]);
 
@@ -42,8 +42,11 @@ namespace fibonacci
             list.Add(first);
             list.Add(second);
 
-            Fibonacci.Recursion(list, steps);
-            Fibonacci.Limit(list, lim);   
+            //Fibonacci.Recursion(list, steps);
+          
+
+            Fibonacci.Limit(list, lim);
+
 
             string result = string.Join(",", list);
             File.WriteAllText("output.txt", result);

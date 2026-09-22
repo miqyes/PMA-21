@@ -1,4 +1,4 @@
-﻿namespace ConsoleApp4
+namespace ConsoleApp4
 {
     public class Fibonacci
     {
@@ -15,12 +15,13 @@
         }
         public static List<int> Limit(List<int> numbers, int lim)
         {
-            while (numbers[numbers.Count - 1] > lim)
+            int nextNum = numbers[numbers.Count - 1] + numbers[numbers.Count - 2];
+            if (nextNum > lim)
             {
-                numbers.RemoveAt(numbers.Count - 1);
+                return numbers;
             }
-            return numbers;
+            numbers.Add(nextNum);
+            return Limit(numbers, lim);
         }
-
     }
 }
