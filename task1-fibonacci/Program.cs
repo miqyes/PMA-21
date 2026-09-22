@@ -1,53 +1,25 @@
-using System;
-using System.IO;
+using System.Numerics;
 
-namespace Fibonacci
+namespace Task1Fibonacci;
+
+class Program
 {
-    class Program
+    private const string StepsFilePath = "steps.txt";
+    private const string InputFilePath = "input.txt";
+    private const string OutputFilePath = "output.txt";
+
+    static void Main()
     {
-        static void Main(string[] args)
-        {
-            string text = File.ReadAllText("input.txt");
-            string[] parts = text.Split(',');
+        int count = int.Parse(File.ReadAllText(StepsFilePath).Trim());
 
-            long first = long.Parse(parts[0].Trim());
-            long second = long.Parse(parts[1].Trim());
-            
-            int steps = int.Parse(File.ReadAllText("steps.txt").Trim());
-            
-            long[] row = new long[steps];
+        List<BigInteger> numbers = File.ReadAllText(InputFilePath)
+            .Split(',')
+            .Select(p => BigInteger.Parse(p.Trim()))
+            .ToList();
 
-            for (int i = 0; i < steps; i++)
-            {
-                if (i == 0)
-                {
-                    row[i] = first;
-                }
-                else if (i == 1)
-                {
-                    row[i] = second;
-                }
-                else
-                {
-                    row[i] = row[i - 1] + row[i - 2];
-                }
-            }
-            
-            string result = "";
+        Fibonacci.Generate(count, numbers);
 
-            for (int i = 0; i < steps; i++)
-            {
-                result += row[i];
-
-                if (i < steps - 1)
-                {
-                    result += ",";
-                }
-            }
-            
-            File.WriteAllText("output.txt", result);
-
-            Console.WriteLine("Результат: " + result);
-        }
+        File.WriteAllText(OutputFilePath, string.Join(", ", numbers));
+        Console.WriteLine($"Saved in {OutputFilePath}");
     }
 }
