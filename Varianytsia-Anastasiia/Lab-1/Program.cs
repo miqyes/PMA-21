@@ -24,14 +24,11 @@ class Program
 
         List<int> numbersByLimit = [first];
 
-        if (second <= limit)
-        {
+        if (second <= limit) {
             numbersByLimit.Add(second);
 
             numbersByLimit = Calculator.FibonacciByLimit(limit, numbersByLimit);
-        }
-        else
-        {
+        } else {
             Console.WriteLine("Друге число більше за ліміт, тому воно не буде додане до списку.");
         }
 

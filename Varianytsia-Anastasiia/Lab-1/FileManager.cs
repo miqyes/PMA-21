@@ -6,16 +6,13 @@ class FileManager
     const string INPUT_FILE = "input.txt";
     const string LIMIT_FILE = "limit.txt";
     const string COUNT_FILE = "count.txt";  
+
     const string OUTPUT_FILE = "output.txt";
 
+//linq
     public static int[] GetInitialNumbersFromFile()
     {
-        string[] lines = File.ReadAllLines(INPUT_FILE);
-
-        int first = int.Parse(lines[0]);
-        int second = int.Parse(lines[1]);
-
-        return [first, second];
+        return File.ReadAllLines(INPUT_FILE).Select(line => int.Parse(line.Trim())).ToArray();
     }
 
     public static int GetLimitNumberFromFile()
