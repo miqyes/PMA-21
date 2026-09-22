@@ -1,10 +1,9 @@
-﻿using System;
+using System;
 
 namespace matrixLab
 {
     public static class Matrix
     {
-        // Зчитування матриць з тексту
         public static List<double[,]> parseMatricesFromFile(string content)
         {
             List<double[,]> result = new List<double[,]>();
@@ -54,8 +53,6 @@ namespace matrixLab
 
             return result;
         }
-
-        // Додавання матриць
         public static double[,] addMatrices(double[,] a, double[,] b)
         {
             int rowsA = a.GetLength(0);
@@ -78,8 +75,6 @@ namespace matrixLab
             }
             return result;
         }
-
-        // Віднімання матриць
         public static double[,] subtractMatrices(double[,] a, double[,] b)
         {
             int rowsA = a.GetLength(0);
@@ -102,8 +97,6 @@ namespace matrixLab
             }
             return result;
         }
-
-        // Множення матриць
         public static double[,] multiplyMatrices(double[,] a, double[,] b)
         {
             int rowsA = a.GetLength(0);
@@ -131,8 +124,6 @@ namespace matrixLab
             }
             return result;
         }
-
-        // Ділення матриць
         public static double[,] divideMatrices(double[,] a, double[,] b)
         {
             int rowsB = b.GetLength(0);
@@ -146,8 +137,6 @@ namespace matrixLab
             double[,] inverseB = getInverseMatrix(b);
             return multiplyMatrices(a, inverseB);
         }
-
-        // Знаходження оберненої матриці
         public static double[,] getInverseMatrix(double[,] matrix)
         {
             int n = matrix.GetLength(0);
@@ -187,8 +176,6 @@ namespace matrixLab
 
             return inverse;
         }
-
-        // Обчислення детермінанта
         public static double calculateDeterminant(double[,] matrix)
         {
             int n = matrix.GetLength(0);
@@ -203,8 +190,6 @@ namespace matrixLab
             }
             return det;
         }
-
-        // Отримання підматриці
         public static double[,] getSubmatrix(double[,] matrix, int excludeRow, int excludeCol)
         {
             int n = matrix.GetLength(0);
@@ -225,8 +210,6 @@ namespace matrixLab
             }
             return sub;
         }
-
-        // Допоміжний метод виведення матриці у стрічінковий потік
         public static void writeMatrixToStream(StreamWriter writer, double[,] matrix)
         {
             int rows = matrix.GetLength(0);
