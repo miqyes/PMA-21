@@ -1,0 +1,21 @@
+Vectors #1 and #2: a = (1; 2; 3), b = (4; 5; 6)
+  a + b = (5; 7; 9)
+  a - b = (-3; -3; -3)
+  a * b = (4; 10; 18)
+  a / b = (0.25; 0.4; 0.5)
+
+Vectors #2 and #3: a = (4; 5; 6), b = (2; 0; 1.5)
+  a + b = (6; 5; 7.5)
+  a - b = (2; 5; 4.5)
+  a * b = (8; 0; 9)
+  a / b = (2; undefined; 4)
+
+Vectors #3 and #4: a = (2; 0; 1.5), b = (7; 8)
+  Cannot compute: sizes differ (3 vs 2)
+
+Vectors #4 and #5: a = (7; 8), b = (3; 4)
+  a + b = (10; 12)
+  a - b = (4; 4)
+  a * b = (21; 32)
+  a / b = (2.33; 2)
+
