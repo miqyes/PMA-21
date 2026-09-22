@@ -1,0 +1,24 @@
+Initial matrix:
+matrix a:
+1,20	5,00	
+3,56	9,00	
+
+matrix b:
+8,92	7,00	
+2,33	4,00	
+
+Addition:
+10,12	12,00	
+5,89	13,00	
+
+Subtraction:
+-7,72	-2,00	
+1,23	5,00	
+
+Multiplication:
+22,35	28,40	
+52,73	60,92	
+
+Division:
+-0,35	1,87	
+-0,35	2,86	
