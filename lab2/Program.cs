@@ -1,71 +1,159 @@
-﻿using System;
-namespace vector
-{
+using System;
+namespace labVec {
+
     class Program
     {
-        public static void Main()
+        static string vectorsFile = "input.txt";
+        static string resultsFile = "results.txt";
+
+        static List<Vector> vectors = new List<Vector>();
+        static List<string> log = new List<string>();
+
+        static void Main(string[] args)
         {
-            static double add(double x, double y)
-            {
-                return x + y;
-            }
-            static double difference(double x, double y)
-            {
-                return x - y;
-            }
-            static double multiplied(double x, double y)
-            {
-                return x * y;
-            }
-            static double divided(double x, double y)
-            {
-                return x / y;
-            }
+            LoadVectors();
 
-            if (!File.Exists("input.txt"))
+            if (vectors.Count < 2)
             {
-                Console.WriteLine("Error: file are not found!");
+                log.Add("Помилка: у файлі має бути 2 вектори");
+                SaveLog();
+                Console.WriteLine("Все збережено в " + resultsFile);
                 return;
             }
-            string[] lines = File.ReadAllLines("input.txt");
-            if (lines.Length < 2)
+
+            Vector a = vectors[0];
+            Vector b = vectors[1];
+
+            log.Add("Вектор A: " + a.ToString());
+            log.Add("Вектор B: " + b.ToString());
+            log.Add("");
+
+            if (a.GetSize() != b.GetSize())
             {
-                Console.WriteLine("Error: file must contain at least 2 lines!");
+                log.Add("Помилка: розміри векторів різні, так не можна");
+                SaveLog();
+                Console.WriteLine("Все збережено в " + resultsFile);
                 return;
             }
-            string[] firstNumbers = lines[0].Split(' ');
-            string[] secondNumbers = lines[1].Split(' ');
-            if (firstNumbers.Length != 3 || secondNumbers.Length != 3)
-            {
-                Console.WriteLine("Error: each line must contain exactly 3 numbers!");
-            }
-            double x1 = double.Parse(firstNumbers[0]);
-            double y1 = double.Parse(firstNumbers[1]);
-            double z1 = double.Parse(firstNumbers[2]);
-            double x2 = double.Parse(secondNumbers[0]);
-            double y2 = double.Parse(secondNumbers[1]);
-            double z2 = double.Parse(secondNumbers[2]);
-            double addX = add(x1, x2);
-            double addY = add(y1, y2);
-            double addZ = add(z1, z2);
-            double diffX = difference(x1, x2);
-            double diffY = difference(y1, y2);
-            double diffZ = difference(z1, z2);
-            double multX = multiplied(x1, x2);
-            double multY = multiplied(y1, y2);
-            double multZ = multiplied(z1, z2);
-            double divX = divided(x1, x2);
-            double divY = divided(y1, y2);
-            double divZ = divided(z1, z2);
 
-            string result = "First vector: " + "(" + x1 + "," + y1 + "," + z1 + ")" + Environment.NewLine +
-                "Second vector: " + "(" + x2 + "," + y2 + "," + z2 + ")" + Environment.NewLine +
-            "Sum: " + "(" + x1 + "," + y1 + "," + z1 + ")" + "+" + "(" + x2 + "," + y2 + "," + z2 + ")" + "=" + "(" + addX + ", " + addY + ", " + addZ + ")" + Environment.NewLine +
-            "Difference: "+ "(" + x1 + "," + y1 + "," + z1 + ")" + "+" + "(" + x2 + "," + y2 + "," + z2 + ")" + "=" + "(" + diffX +", "+diffY+", "+diffZ+")"+Environment.NewLine+
-            "Product: "+ "(" + x1 + "," + y1 + "," + z1 + ")" + "+" + "(" + x2 + "," + y2 + "," + z2 + ")" + "=" + "(" + multX + ", " + multY + ", " + multZ+")"+Environment.NewLine+
-            "Qoutient: "+ "(" + x1 + "," + y1 + "," + z1 + ")" + "+" + "(" + x2 + "," + y2 + "," + z2 + ")" + "=" + "(" + divX + ", " + divY + ", " + divZ+")";
-            File.WriteAllText("result.txt", result);
-            Console.WriteLine("Result is successfully saved in file 'result.txt'");
+            DoOperation(a, b, "+");
+            DoOperation(a, b, "-");
+            DoOperation(a, b, "*");
+            if (b.hasZero())
+            {
+                log.Add(a.ToString() + "/" + b.ToString() + "=ділення неможливе, вдругому векторі є нуль"); }
+                else {
+                    DoOperation(a, b, "/"); }
+
+                SaveLog();
+
+                Console.WriteLine("Все збережено в " + resultsFile);
+            }
+            static void LoadVectors()
+            {
+                try
+                {
+                    if (!File.Exists(vectorsFile))
+                    {
+                        log.Add("Помилка: файл " + vectorsFile + " не знайдено");
+                        return;
+                    }
+
+                    string[] lines = File.ReadAllLines(vectorsFile);
+
+                    foreach (string line in lines)
+                    {
+                        if (line.Trim() == "")
+                        {
+                            continue;
+                        }
+
+                        try
+                        {
+                            string[] parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                            double[] coords = new double[parts.Length];
+
+                            for (int i = 0; i < parts.Length; i++)
+                            {
+                                coords[i] = double.Parse(parts[i].Trim());
+                            }
+
+                            Vector v = new Vector(coords);
+                            vectors.Add(v);
+                        }
+                        catch (FormatException)
+                        {
+                            log.Add("Пропускаю кривий рядок у файлі: " + line);
+                        }
+                    }
+                }
+                catch (IOException ex)
+                {
+                    log.Add("Помилка читання файлу: " + ex.Message);
+                }
+            }
+            static void DoOperation(Vector a, Vector b, string op)
+            {
+                string[] result = new string[a.GetSize()];
+
+                for (int i = 0; i < a.GetSize(); i++)
+                {
+                    try
+                    {
+                        double value;
+
+                        if (op == "+")
+                        {
+                            value = a.Coords[i] + b.Coords[i];
+                        }
+                        else if (op == "-")
+                        {
+                            value = a.Coords[i] - b.Coords[i];
+                        }
+                        else if (op == "*")
+                        {
+                            value = a.Coords[i] * b.Coords[i];
+                        }
+                        else
+                        {
+                            if (b.Coords[i] == 0)
+                            {
+                                throw new DivideByZeroException();
+                            }
+                            value = a.Coords[i] / b.Coords[i];
+                        }
+
+                        result[i] = value.ToString();
+                    }
+                    catch (DivideByZeroException) {
+                        result[i] = "ділення на нуль";
+                    }
+                    catch (Exception ex)
+                    {
+                        result[i] = "помилка (" + ex.Message + ")";
+                    }
+                }
+
+                string logLine = a.ToString() + " " + op + " " + b.ToString() + " = (" + string.Join(", ", result) + ")";
+                log.Add(logLine);
+            }
+
+            static void SaveLog()
+            {
+                try
+                {
+                    using (StreamWriter sw = new StreamWriter(resultsFile, false))
+                    {
+                        foreach (string line in log)
+                        {
+                            sw.WriteLine(line);
+                        }
+                    }
+                }
+                catch (IOException ex)
+                {
+                    Console.WriteLine("Помилка запису в файл результатів: " + ex.Message);
+                }
+            }
         }
     }
-}
