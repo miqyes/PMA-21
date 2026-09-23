@@ -12,28 +12,28 @@ public class Matrix
         get { return data[i, j]; }
         set { data[i, j] = value; } }
     
-    public static Matrix operator +(Matrix matrix1, Matrix matrix2) {
+    public static Matrix operator +(Matrix matrixFirst, Matrix matrixSecond) {
         Matrix res = new Matrix();
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++)
-                res[i, j] = matrix1[i, j] + matrix2[i, j]; }
+                res[i, j] = matrixFirst[i, j] + matrixSecond[i, j]; }
         return res; }
     
-    public static Matrix operator -(Matrix matrix1, Matrix matrix2)
+    public static Matrix operator -(Matrix matrixFirst, Matrix matrixSecond)
     {
         Matrix res = new Matrix();
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++)
-                res[i, j] = matrix1[i, j] - matrix2[i, j]; }
+                res[i, j] = matrixFirst[i, j] - matrixSecond[i, j]; }
         return res; }
     
-    public static Matrix operator *(Matrix matrix1, Matrix matrix2)
+    public static Matrix operator *(Matrix matrixFirst, Matrix matrixSecond)
     {
         Matrix res = new Matrix();
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++) {
                 for (int k = 0; k < 2; k++)
-                    res[i, j] += matrix1[i, k] * matrix2[k, j]; } }
+                    res[i, j] += matrixFirst[i, k] * matrixSecond[k, j]; } }
         return res;
     }
     public static int determinant(Matrix matrix) {
@@ -46,15 +46,20 @@ public class Matrix
     {
         int det = determinant(matrix);
         Matrix res = new Matrix();
-        res[0, 0] = matrix[1, 1] / det;
-        res[0, 1] = -matrix[0, 1] / det;
-        res[1, 0] = -matrix[1, 0] / det;
-        res[1, 1] = matrix[0, 0] / det;
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 2; j++)
+            {
+                if (i + j % 2 == 1)
+                    res[i, j] = -matrix[i, j] / det;
+                res[i, i] = matrix[j-i, j-i]/det;
+            }
+        }
         return res;
     }
-    public static Matrix operator /(Matrix matrix1, Matrix matrix2)
+    public static Matrix operator /(Matrix matrixFirst, Matrix matrixSecond)
     {
-        return matrix1 * reverseMatrix(matrix2);
+        return matrixFirst * reverseMatrix(matrixSecond);
     }
     
     public override string ToString()
@@ -62,3 +67,7 @@ public class Matrix
         return $"{data[0, 0]} {data[0, 1]}\n {data[1, 0]} {data[1, 1]}";
     }
 }
+
+
+
+
