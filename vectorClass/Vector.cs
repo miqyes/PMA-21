@@ -14,27 +14,27 @@ public class Vector
         get { return data[i]; }
     }
 
-    public static Vector operator +(Vector vec1, Vector vec2)
+    public static Vector operator +(Vector first, Vector second)
     {
-        if (vec1.data.Length != vec2.data.Length)
+        if (first.data.Length != second.data.Length)
             throw new Exception("Різні розміри");
-        double[] result = new double[vec1.data.Length];
+        double[] result = new double[first.data.Length];
         for (int i = 0; i < result.Length; i++)
         {
-            result[i] = vec1[i] + vec2[i];
+            result[i] = first[i] + second[i];
         }
 
         return new Vector(result);
     }
 
-    public static Vector operator -(Vector vec1, Vector vec2)
+    public static Vector operator -(Vector first, Vector second)
     {
-        if (vec1.data.Length != vec2.data.Length)
+        if (first.data.Length != second.data.Length)
             throw new Exception("Різні розміри");
-        double[] result = new double[vec1.data.Length];
+        double[] result = new double[first.data.Length];
         for (int i = 0; i < result.Length; i++)
         {
-            result[i] = vec1[i] - vec2[i];
+            result[i] = first[i] - second[i];
         }
 
         return new Vector(result);
