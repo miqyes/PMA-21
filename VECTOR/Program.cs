@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace VectorLab;
+namespace LabVector;
 
 public class Program
 {
@@ -9,66 +9,67 @@ public class Program
     public static void Main(string[] args)
     {
         
-        string input = File.ReadAllText("vector.txt");
+        string input = File.ReadAllText("vectors.txt");
         string[] lines = input.Split('\n');
-        string[] vector1 = lines[0].Split(" ");   
-        string[] vector2 = lines[1].Split(" ");   
-        
-        
-        double x = double.Parse(vector1[0]);
-        double y = double.Parse(vector1[1]);
-        double z = double.Parse(vector1[2]);
-        
-        double X = double.Parse(vector2[0]);
-        double Y = double.Parse(vector2[1]);
-        double Z = double.Parse(vector2[2]);
-        
-        Console.WriteLine($"x1 = {x}; y1 = {y}; z1 = {z}");
-        Console.WriteLine($"x2 = {X}; y2 = {Y}; z2 = {Z}");
-       
-        
-        switch (Console.ReadLine())
+        string[] vector = lines[0].Split(" ");   
+        string[] Vector = lines[1].Split(" ");
+
+        if (Vectors.Check(vector, Vector) == false)
         {
-            
-            case "+":
-            { 
-              double Newx= (Vector.Add(x, X));
-              double Newy= (Vector.Add(y, Y));
-              double Newz= (Vector.Add(z, Z));
-              File.AppendAllText("result.txt", $"Add -: ({Newx}; {Newy}; {Newz})\n");
-              break;
-            }
-            
-            case "-":
-            {
-                double Newx = Vector.Subtract(x, X);
-                double Newy = Vector.Subtract(y, Y);
-                double Newz = Vector.Subtract(z, Z);
-                File.AppendAllText("result.txt", $"Subtract -: ({Newx}; {Newy}; {Newz})\n");
-                break;
-            }
-            
-            case "*":
-            {
-                double Newx= (Vector.Multiply(x, X));
-                double Newy= (Vector.Multiply(y, Y));
-                double Newz= (Vector.Multiply(z, Z));
-                File.AppendAllText("result.txt", $"Multiply * : ({Newx}; {Newy}; {Newz})\n");
-                break;
-            }
-            
-            case "/":
-            {
-                double Newx= (Vector.Divide(x, X));
-                double Newy= (Vector.Divide(y, Y));
-                double Newz=  (Vector.Divide(z, Z));
-                File.AppendAllText("result.txt", $"Divide /: ({Newx}; {Newy}; {Newz})\n");
-                break;
-            }
-            
-            
+            return;
+        }
+
+        for (int j = 0; j < 3; j++)
+        {
+            Vectors.masVector[0,j] = double.Parse(vector[j]);
+            Vectors.masVector[1,j] = double.Parse(Vector[j]);
         }
         
+        File.WriteAllText("rezult.txt", "");
+        string[] operations = { "+", "-", "*", "/" };
+        foreach (string operation in operations)
+        {
+            double[]result=new double[3];
 
+            switch (operation)
+            {
+                case "+":
+                    for (int j = 0; j < 3; j++)
+                    {
+                        result[j] = Vectors.Add(Vectors.masVector[0, j], Vectors.masVector[1, j]);
+                    }
+
+                    File.AppendAllText("rezult.txt", $"Add+: {result[0]}; {result[1]}; {result[2]}\n");
+                    break;
+
+                case "-":
+                    for (int j = 0; j < 3; j++)
+                    {
+                        result[j] = Vectors.Subtract(Vectors.masVector[0, j], Vectors.masVector[1, j]);
+                    }
+
+                    File.AppendAllText("rezult.txt", $"Subtract-: {result[0]}; {result[1]}; {result[2]}\n");
+                    break;
+
+                case "*":
+                    for (int j = 0; j < 3; j++)
+                    {
+                        result[j] = Vectors.Multiply(Vectors.masVector[0, j], Vectors.masVector[1, j]);
+                    }
+
+                    File.AppendAllText("rezult.txt", $"Multiply*: {result[0]}; {result[1]}; {result[2]}\n");
+                    break;
+
+                case "/":
+                    for (int j = 0; j < 3; j++)
+                    {
+                        result[j] = Vectors.CheckDivide(Vectors.masVector[0, j], Vectors.masVector[1, j]);
+                    }
+
+                    File.AppendAllText("rezult.txt", $"Divide/: {result[0]}; {result[1]}; {result[2]}\n");
+                    break;
+            }
+        }
+           
     }
 }
