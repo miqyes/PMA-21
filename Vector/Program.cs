@@ -1,9 +1,12 @@
 ﻿namespace Task2;
 class Program
 {
+    private static string readFile = "vector.txt";
+    private static string writeFile = "result.txt";
+
     public static int[][] read()
     {
-        string line = File.ReadAllText("vector.txt");
+        string line = File.ReadAllText(readFile);
         int[] parts = line.Split(new[]{',',' ' }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
         int n = parts.Length / 3;
         int[][] res = new int[n][];
@@ -16,33 +19,33 @@ class Program
         }
         return res;
     }
-    public static void write<T>(string text, int[] vector1, object vector2, T[] res, char operation)
+    public static void write<T>(string text, int[] vectorFirst, object vectorSecond, T[] res, char operation)
     {
-        if (vector2 is T[] vector)
-            vector2 = "(" + string.Join(";", vector) + ")";
+        if (vectorSecond is T[] vector)
+            vectorSecond = "(" + string.Join(";", vector) + ")";
         else
-            vector2 = vector2.ToString();
+            vectorSecond = vectorSecond.ToString();
         
-        using (StreamWriter writer = new StreamWriter("result.txt", true))
+        using (StreamWriter writer = new StreamWriter(writeFile, true))
         {
             writer.WriteLine(
-                text +"("+ string.Join(";", vector1) +")"+ operation  +  vector2  + "=(" + string.Join(";", res) +")");
+                text +"("+ string.Join(";", vectorFirst) +")"+ operation  +  vectorSecond  + "=(" + string.Join(";", res) +")");
         }
     }
 
     static void Main()
     {
-        File.WriteAllText("result.txt", "");
+        File.WriteAllText(writeFile, "");
 
         Console.OutputEncoding = System.Text.Encoding.UTF8;
         Console.InputEncoding = System.Text.Encoding.UTF8;
 
         int[][] vector = read();
-        File.AppendAllText("result.txt","ВСІ ВЕКТОРИ \n");
+        File.AppendAllText(writeFile,"ВСІ ВЕКТОРИ \n");
         for (int i = 0; i < vector.Length; i++)
         {
             Console.WriteLine($"{i + 1} ) ({string.Join(";", vector[i])})");
-            using (StreamWriter writer = new StreamWriter("result.txt", true))
+            using (StreamWriter writer = new StreamWriter(writeFile, true))
             {
                 writer.WriteLine($"{i + 1} ) ({string.Join(";", vector[i])})");
             }
@@ -68,10 +71,10 @@ class Program
         }
         catch (Exception ex)
         {
-            File.AppendAllText("result.txt", ex.Message);
+            File.AppendAllText(writeFile, ex.Message);
         }
         
 
-        Console.WriteLine("Результат у файлі \"result.txt\"");
+        Console.WriteLine($"Результат у файлі \"{writeFile}\"");
     }
 }
