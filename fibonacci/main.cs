@@ -21,9 +21,8 @@ class Program
         string[] parts = inputContent.Split(new[] { ',', ' ', '\r', '\n', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
         if (parts.Length < 2 ||
-            !BigInteger.TryParse(parts[0], out BigInteger num1) ||
-            !BigInteger.TryParse(parts[1], out BigInteger num2))
-        {
+            !BigInteger.TryParse(parts[0], out BigInteger num_one) ||
+            !BigInteger.TryParse(parts[1], out BigInteger num_two)) {
             Console.WriteLine("[ERROR]: File input.txt must contain at least 2 valid numbers.");
             return;
         }
@@ -35,9 +34,9 @@ class Program
             return;
         }
 
-        Console.WriteLine($"Start numbers: {num1}, {num2}");
+        Console.WriteLine($"Start numbers: {num_one}, {num_two}");
 
-        var numbers = new List<BigInteger> { num1, num2 };
+        var numbers = new List<BigInteger> { num_one, num_two };
         int count = (int)value;
 
 
