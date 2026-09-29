@@ -5,6 +5,12 @@ public class ArrayList<T>
     T[] _data;
     int _count;
 
+    public ArrayList()
+    {
+        _data = new T[0];
+        _count = 0;
+    }
+
     public ArrayList(int capacity)
     {
         _data = new T[capacity];
@@ -85,8 +91,8 @@ public class ArrayList<T>
             _data = temp._data;
         }
 
-        if (_data.Length < index || index < 0)
-            throw new Exception("Capacity is less than your index number or you enter signed number");
+        if (_count <= index || index < 0)
+            throw new Exception("List have less element than your index number or you enter signed number");
         for (int i = _count; i > index; i--)
             _data[i] = _data[i - 1];
         _data[index] = number;
@@ -111,10 +117,10 @@ public class ArrayList<T>
             result += "none element";
         else
         {
-            for (int i = 0; i < _data.Length; i++)
+            for (int i = 0; i < _count; i++)
             {
                 result += _data[i];
-                if (i < _data.Length - 1)
+                if (i < _count- 1)
                     result += ", ";
             }
         }
