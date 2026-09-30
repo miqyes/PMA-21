@@ -2,51 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-
-class FileManager
-{
-    const string Separator = " ";
-
-    public static double[][]? LoadVectorFromFile(string filePath)
-    {
-        if (!File.Exists(filePath))
-        {
-            Console.WriteLine($"[ПОМИЛКА] Файл '{filePath}' не знайдено.");
-            return null;
-        }
-
-        string[] lines = File.ReadAllLines(filePath);
-        if (lines.Length < 2)
-        {
-            Console.WriteLine("[ПОМИЛКА] У файлі має бути щонайменше 2 рядки з векторами.");
-            return null;
-        }
-
-        string[] partsOne = lines[0].Split(Separator, StringSplitOptions.RemoveEmptyEntries);
-        double[] vectorOne = new double[partsOne.Length];
-        for (int i = 0; i < partsOne.Length; i++)
-        {
-            vectorOne[i] = double.Parse(partsOne[i], CultureInfo.InvariantCulture);
-        }
-
-        string[] partsTwo = lines[1].Split(Separator, StringSplitOptions.RemoveEmptyEntries);
-        double[] vectorTwo = new double[partsTwo.Length];
-        for (int i = 0; i < partsTwo.Length; i++)
-        {
-            vectorTwo[i] = double.Parse(partsTwo[i], CultureInfo.InvariantCulture);
-        }
-
-        return [vectorOne, vectorTwo];
-    }
-
-    public static void SaveResultToFile(string filePath, List<string> results)
-    {
-        File.WriteAllLines(filePath, results);
-        Console.WriteLine($"Результат збережено у: {Path.GetFullPath(filePath)}");
-    }
-}
 
 class Program
 {
@@ -55,45 +10,46 @@ class Program
 
     static void Main()
     {
-        double[][]? vectors = FileManager.LoadVectorFromFile(InputPath);
+        double[][]? vectors = filemanager.LoadVectorFromFile(InputPath);
         if (vectors == null)
         {
             return;
         }
 
-        double[] vectorOne = vectors[0];
-        double[] vectorTwo = vectors[1];
+        List<string> results = new List<string>();
 
-        if (vectorOne.Length != vectorTwo.Length)
+        for (int i = 0; i < vectors.Length - 1; i++)
         {
-            Console.WriteLine("Помилка: вектори мають різну розмірність.");
-            return;
+            double[] vectorOne = vectors[i];
+            double[] vectorTwo = vectors[i + 1];
+
+            if (vectorOne.Length != vectorTwo.Length)
+            {
+                Console.WriteLine($"error: vectors in pair {i + 1} та {i + 2} have diff lenght.");
+                continue;
+            }
+
+            results.Add($"Pair {i + 1} and {i + 2}");
+
+            double[] sum = vc.Add(vectorOne, vectorTwo);
+            double[] diff = vc.Subtract(vectorOne, vectorTwo);
+            double[] mult = vc.Multiply(vectorOne, vectorTwo);
+            string[] div = vc.Divide(vectorOne, vectorTwo);
+
+            string strV1 = vc.ToString(vectorOne);
+            string strV2 = vc.ToString(vectorTwo);
+
+            results.Add($"{strV1} + {strV2} = {vc.ToString(sum)}");
+            results.Add($"{strV1} - {strV2} = {vc.ToString(diff)}");
+            results.Add($"{strV1} * {strV2} = {vc.ToString(mult)}");
+            results.Add($"{strV1} / {strV2} = {vc.ToString(div)}");
+
+            if (i < vectors.Length - 2)
+            {
+                results.Add("");
+            }
         }
 
-        double[] vectorSum = vc.Add(vectorOne, vectorTwo);
-        double[] subtractionResult = vc.Subtract(vectorOne, vectorTwo);
-        double[] multipliedVector = vc.Multiply(vectorOne, vectorTwo);
-
-        string strV1 = vc.ToString(vectorOne);
-        string strV2 = vc.ToString(vectorTwo);
-
-        List<string> results =
-        [
-            strV1 + " + " + strV2 + " = " + vc.ToString(vectorSum),
-            strV1 + " - " + strV2 + " = " + vc.ToString(subtractionResult),
-            strV1 + " * " + strV2 + " = " + vc.ToString(multipliedVector)
-        ];
-
-        if (vc.HasZero(vectorTwo))
-        {
-            results.Add("Ділення неможливе: у другому векторі є нуль.");
-        }
-        else
-        {
-            double[] divisionResult = vc.Divide(vectorOne, vectorTwo);
-            results.Add(strV1 + " / " + strV2 + " = " + vc.ToString(divisionResult));
-        }
-
-        FileManager.SaveResultToFile(OutputPath, results);
+        filemanager.SaveResultToFile(OutputPath, results);
     }
 }

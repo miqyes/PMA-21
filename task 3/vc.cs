@@ -34,26 +34,21 @@ class vc
         return result;
     }
 
-    public static double[] Divide(double[] a, double[] b)
+    public static string[] Divide(double[] a, double[] b)
     {
-        double[] result = new double[a.Length];
+        string[] result = new string[a.Length];
         for (int i = 0; i < a.Length; i++)
         {
-            result[i] = a[i] / b[i];
-        }
-        return result;
-    }
-
-    public static bool HasZero(double[] vector)
-    {
-        foreach (double val in vector)
-        {
-            if (val == 0)
+            if (b[i] == 0)
             {
-                return true;
+                result[i] = "-";
+            }
+            else
+            {
+                result[i] = FormatNumber(a[i] / b[i]);
             }
         }
-        return false;
+        return result;
     }
 
     public static string ToString(double[] vector)
@@ -61,8 +56,18 @@ class vc
         string[] parts = new string[vector.Length];
         for (int i = 0; i < vector.Length; i++)
         {
-            parts[i] = vector[i].ToString(CultureInfo.InvariantCulture);
+            parts[i] = FormatNumber(vector[i]);
         }
-        return "(" + string.Join(", ", parts) + ")";
+        return "(" + string.Join("; ", parts) + ")";
+    }
+
+    public static string ToString(string[] vector)
+    {
+        return "(" + string.Join("; ", vector) + ")";
+    }
+
+    private static string FormatNumber(double value)
+    {
+        return value.ToString(CultureInfo.InvariantCulture).Replace('.', ',');
     }
 }
