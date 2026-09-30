@@ -17,8 +17,8 @@ class LinkedList<T> {
         _head = null;
         _tail = null;
         _count = 0;
-        for (int i = 0; i < data.Length; i++)
-            Add(data[i]);
+        foreach(var element in data)
+            Add(element);
     }
 
     public int Count
@@ -122,6 +122,7 @@ class LinkedList<T> {
         else
         {
             Node<T> current = _head;
+            
             for (int i = 0; i < _count; i++)
             {
                 res += current.Element;

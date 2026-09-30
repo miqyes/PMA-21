@@ -1,5 +1,4 @@
 namespace Task7;
-
 class Node<T>
 {
     private T _element;
