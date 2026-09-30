@@ -8,11 +8,18 @@
         string inputPath = "matrix.txt";
         string outputPath = "output.txt";
 
-        var (matA, op, matB) = MatrixFileService.ReadMtrx(inputPath);
+        try
+        {
+            MatrixFileService.ReadMtrx(inputPath, out double[,] matA, out string op, out double[,] matB);
 
-        double[,] result = MatrixOperation.OpProcessing(op, matA, matB);
+            double[,] result = MatrixOperation.OpProcessing(op, matA, matB);
 
-        MatrixFileService.WriteResult(outputPath, result);
-        Console.WriteLine($"Успішно обчислено та записано у {outputPath}");
+            MatrixFileService.WriteResult(outputPath, result);
+            Console.WriteLine($"Успішно обчислено та записано у {outputPath}");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Помилка: {e.Message}");
+        }
     }
 }
