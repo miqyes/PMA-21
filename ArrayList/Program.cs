@@ -4,28 +4,25 @@ class Program
 {
     static void Main()
     {
-        ArrayList<int> example1 = new ArrayList<int>(4);
-        ArrayList<double> example2 = new ArrayList<double>(1.3, 4.7, 2.9, 5.8);
+        ArrayList<int> firstExample = new ArrayList<int>(9);
+        ArrayList<double> secondExample = new ArrayList<double>(1.3, 4.7, 2.9, 5.8);
 
-        Console.WriteLine(example1);
-        Console.WriteLine(example2);
+        Console.WriteLine(firstExample);
+        Console.WriteLine(secondExample);
 
-        example1.Add(3);
-        example1.Add(8);
-        example1.Add(7);
-        example1.Add(-1);
-        example1.Add(3);
-        example1.Add(-57);
+        firstExample.Add(3);
+        firstExample.Add(8);
+        firstExample.Add(7);
 
-        example2.Add(3.1);
-        example2.Add(2);
-
-        Console.WriteLine(example1);
-        Console.WriteLine(example2);
+        secondExample.Add(3.1);
+        secondExample.Add(2);
+        
+        Console.WriteLine(firstExample);
+        Console.WriteLine(secondExample);
 
         try
         {
-            example1.AddIndx(3, 78);
+            firstExample.AddIndx(3, 78);
         }
         catch (Exception e)
         {
@@ -34,27 +31,27 @@ class Program
 
         try
         {
-            example2.AddIndx(71, 8);
+            secondExample.AddIndx(71, 8);
         }
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
         }
 
-        Console.WriteLine(example1);
-        Console.WriteLine(example2);
+        Console.WriteLine(firstExample);
+        Console.WriteLine(secondExample);
 
-        example1.Delete(3);
-        example1.Delete(33);
-        example2.Delete(3.1);
-        example2.Delete(3.3);
+        firstExample.Delete(3);
+        firstExample.Delete(33);
+        secondExample.Delete(3.1);
+        secondExample.Delete(3.3);
 
-        Console.WriteLine(example1);
-        Console.WriteLine(example2);
+        Console.WriteLine(firstExample);
+        Console.WriteLine(secondExample);
 
         try
         {
-            example1.DeleteIndx(33);
+            firstExample.DeleteIndx(33);
         }
         catch (Exception e)
         {
@@ -63,20 +60,20 @@ class Program
 
         try
         {
-            example2.DeleteIndx(39);
+            secondExample.DeleteIndx(39);
         }
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
         }
 
-        Console.WriteLine(example1);
-        Console.WriteLine(example2);
+        Console.WriteLine(firstExample);
+        Console.WriteLine(secondExample);
 
-        example1.Clear();
-        example2.Clear();
+        firstExample.Clear();
+        secondExample.Clear();
 
-        Console.WriteLine(example1);
-        Console.WriteLine(example2);
+        Console.WriteLine(firstExample);
+        Console.WriteLine(secondExample);
     }
 }

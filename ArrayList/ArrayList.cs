@@ -20,24 +20,27 @@ public class ArrayList<T>
 
     public ArrayList(params T[] array)
     {
-        _data = new T[array.Length];
-        for (int i = 0; i < array.Length; i++)
-            _data[i] = array[i];
+        _data = array.Select(element => element).ToArray();
         _count = array.Length;
     }
 
-    static public ArrayList<T> Copy(ArrayList<T> ex)
+     public ArrayList<T> Copy(ArrayList<T> ex)
     {
         if (ex == null)
             return new ArrayList<T>(1);
         int capacity = (int)(1.5 * ex._data.Length + 1);
         ArrayList<T> res = new ArrayList<T>(capacity);
-        for (int i = 0; i < ex._count; i++)
-            res[i] = ex[i];
+        res._data = Enumerable.Range(0, capacity).Select(i => i < ex._count ? ex._data[i] : default(T)).ToArray();
         res._count = ex._count;
         return res;
     }
-
+    public void Resize()
+    {
+        if (_count >= _data.Length / 2)
+            throw new Exception("Sorry,we can't reduce");
+        int capacity = (int)(0.67 * _data.Length + 1);
+        _data = Enumerable.Range(0, capacity).Select(i => i < _count ? _data[i] : default(T)).ToArray();
+    }
     public T this[int i]
     {
         get { return _data[i]; }
@@ -61,8 +64,7 @@ public class ArrayList<T>
         {
             if (_data[i].Equals(number))
             {
-                for (int j = i; j < _count - 1; j++)
-                    _data[j] = _data[j + 1];
+                _data = _data.Select((x, index) => index>=i && index<_count-1 ? _data[index + 1] : x).ToArray();
                 _count--;
                 i--;
             }
@@ -71,8 +73,7 @@ public class ArrayList<T>
 
     public void Clear()
     {
-        for (int i = 0; i < _count; i++)
-            _data[i] = default(T);
+        _data = new T[0];
         _count = 0;
     }
 
@@ -93,8 +94,7 @@ public class ArrayList<T>
 
         if (_count <= index || index < 0)
             throw new Exception("List have less element than your index number or you enter signed number");
-        for (int i = _count; i > index; i--)
-            _data[i] = _data[i - 1];
+        _data = _data.Select((x, indx) => indx >= index && indx < _count - 1 ? _data[indx + 1] : x).ToArray();
         _data[index] = number;
         _count++;
     }
@@ -103,8 +103,7 @@ public class ArrayList<T>
     {
         if (index < 0 || index >= _count)
             throw new Exception("Doesn’t exist such element");
-        for (int i = index; i < _count - 1; i++)
-            _data[i] = _data[i + 1];
+        _data = _data.Select((x, i) => i >= index && i < _count - 1 ? _data[i + 1] : x).ToArray();
         _data[_count - 1] = default(T);
         _count--;
     }
@@ -117,11 +116,11 @@ public class ArrayList<T>
             result += "none element";
         else
         {
-            for (int i = 0; i < _count; i++)
+            int now = _count;
+            foreach (T a in _data.Take(_count))
             {
-                result += _data[i];
-                if (i < _count- 1)
-                    result += ", ";
+                result += now == 1 ? $"{a}" : $"{a} ; ";
+                now--;
             }
         }
 
