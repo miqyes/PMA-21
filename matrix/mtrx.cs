@@ -1,63 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
 using System.IO;
 
 public static class MatrixFileService
 {
-    public static (double[,] mtrxA, string op, double[,] mtrxB) ReadMtrx(string path)
+    public static void ReadMtrx(string path, out double[,] matA, out string op, out double[,] matB)
     {
-        var up = new List<string[]>();
-        var down = new List<string[]>();
-        string? op = null;
-        string? line;
+        string[] lines = File.ReadAllLines(path);
 
-        var knownOps = new HashSet<string> { "+", "-", "*", "/" };
+        List<string[]> rowsA = new List<string[]>();
+        List<string[]> rowsB = new List<string[]>();
+        op = "";
+        bool foundOp = false;
 
-        using (var sr = new StreamReader(path))
+        for (int i = 0; i < lines.Length; i++)
         {
-            while ((line = sr.ReadLine()) != null)
+            string line = lines[i].Trim();
+            if (line == "")
+                continue;
+
+            if (line == "+" || line == "-" || line == "*" || line == "/")
             {
-                line = line.Trim();
-                if (string.IsNullOrEmpty(line))
-                    continue;
-
-                if (knownOps.Contains(line))
-                {
-                    op = line;
-                    break;
-                }
-
-                up.Add(line.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries));
+                op = line;
+                foundOp = true;
+                continue;
             }
 
-            while ((line = sr.ReadLine()) != null)
-            {
-                line = line.Trim();
-                if (string.IsNullOrEmpty(line))
-                    continue;
+            string[] parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-                down.Add(line.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries));
+            if (!foundOp)
+                rowsA.Add(parts);
+            else
+                rowsB.Add(parts);
+        }
+
+        if (!foundOp || rowsA.Count == 0 || rowsB.Count == 0)
+            throw new Exception("Некоректний формат файлу.");
+
+        matA = new double[rowsA.Count, rowsA[0].Length];
+        for (int i = 0; i < rowsA.Count; i++)
+        {
+            for (int j = 0; j < rowsA[0].Length; j++)
+            {
+                matA[i, j] = Convert.ToDouble(rowsA[i][j]);
             }
         }
 
-        if (op == null || up.Count == 0 || down.Count == 0)
-            throw new FormatException("Некоректний формат файлу.");
-
-        int rowsA = up.Count, colsA = up[0].Length;
-        var matA = new double[rowsA, colsA];
-        for (int i = 0; i < rowsA; i++)
-            for (int j = 0; j < colsA; j++)
-                matA[i, j] = double.Parse(up[i][j], CultureInfo.InvariantCulture);
-
-        int rowsB = down.Count, colsB = down[0].Length;
-        var matB = new double[rowsB, colsB];
-        for (int i = 0; i < rowsB; i++)
-            for (int j = 0; j < colsB; j++)
-                matB[i, j] = double.Parse(down[i][j], CultureInfo.InvariantCulture);
-
-        return (matA, op, matB);
+        matB = new double[rowsB.Count, rowsB[0].Length];
+        for (int i = 0; i < rowsB.Count; i++)
+        {
+            for (int j = 0; j < rowsB[0].Length; j++)
+            {
+                matB[i, j] = Convert.ToDouble(rowsB[i][j]);
+            }
+        }
     }
 
     public static void WriteResult(string path, double[,] result)
@@ -79,14 +75,22 @@ public static class MatrixFileService
 
 public static class MatrixOperation
 {
-    public static double[,] OpProcessing(string op, double[,] a, double[,] b) => op switch
+    public static double[,] OpProcessing(string op, double[,] a, double[,] b)
     {
-        "+" => Add(a, b),
-        "-" => Subtract(a, b),
-        "*" => Multiply(a, b),
-        "/" => Divide(a, b),
-        _ => throw new InvalidOperationException($"Невідома або непідтримувана операція: '{op}'")
-    };
+        switch (op)
+        {
+            case "+":
+                return Add(a, b);
+            case "-":
+                return Subtract(a, b);
+            case "*":
+                return Multiply(a, b);
+            case "/":
+                return Divide(a, b);
+            default:
+                throw new Exception($"Невідома операція: '{op}'");
+        }
+    }
 
     private static void CheckEqualDimensions(double[,] a, double[,] b)
     {
