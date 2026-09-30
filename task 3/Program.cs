@@ -50,12 +50,12 @@ class FileManager
 
 class Program
 {
+    private const string InputPath = "input.txt";
+    private const string OutputPath = "output.txt";
+
     static void Main()
     {
-        string inputPath = "input.txt";
-        string outputPath = "output.txt";
-
-        double[][]? vectors = FileManager.LoadVectorFromFile(inputPath);
+        double[][]? vectors = FileManager.LoadVectorFromFile(InputPath);
         if (vectors == null)
         {
             return;
@@ -94,6 +94,6 @@ class Program
             results.Add(strV1 + " / " + strV2 + " = " + vc.ToString(divisionResult));
         }
 
-        FileManager.SaveResultToFile(outputPath, results);
+        FileManager.SaveResultToFile(OutputPath, results);
     }
 }
