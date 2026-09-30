@@ -1,0 +1,8 @@
+Addition (A + B): 
+(52, 11, 12)
+Subtraction (A - B): 
+(38, 3, -12)
+Multiplication (A * B): 
+(315, 28, 0)
+Division (A/B): 
+(6,43, 1,75, 0)
