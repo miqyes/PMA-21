@@ -1,0 +1,14 @@
+Addition (A + B): 
+2	1
+0	1
+
+Subtraction (A - B): 
+0	-1
+0	1
+
+Multiplication (A * B): 
+1	1
+0	0
+
+Division (A * B^-1):
+Cannot divide by zero!
