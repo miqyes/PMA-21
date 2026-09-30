@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <RootNamespace>task_2</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Content Include="bin\Debug\net10.0\task 2.deps.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="bin\Debug\net10.0\input.txt" />
+      <None Include="bin\Debug\net10.0\steps.txt" />
+    </ItemGroup>
+
+</Project>
