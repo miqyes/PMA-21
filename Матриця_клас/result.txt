@@ -1,0 +1,14 @@
+Addition (A + B): 
+3	141	
+12	14	
+
+Subtraction (A - B): 
+3	-33	
+4	0	
+
+Multiplication (A * B): 
+216	639	
+28	745	
+
+Division (A * B^-1): 
+Cannot divide by zero!
