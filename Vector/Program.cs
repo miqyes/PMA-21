@@ -1,8 +1,8 @@
 ﻿class Program
 {
 
-    private static string inputFile = "input.txt";
-    private static string outputFile = "output.txt";
+    const string inputFile = "input.txt";
+    const string outputFile = "output.txt";
 
     public static void output(string text, double[] vecFirst, double[] vecSecond, double[] vecResult, char operation)
     {
