@@ -1,7 +1,16 @@
 public static class VectorMath
 {
+
+    private static void SameLength(double[] a, double[] b)
+    {
+        if (a.Length != b.Length)
+        {
+            throw new Exception("Different number of elements");
+        }
+    }
     public static double[] add(double[] a, double[] b)
     {
+        SameLength(a, b);
         double[] result = new double[a.Length];
         for (int i = 0; i < result.Length; i++)
         {
@@ -12,6 +21,7 @@ public static class VectorMath
 
     public static double[] subtract(double[] a, double[] b)
     {
+        SameLength(a, b);
         double[] result = new double[a.Length];
         for (int i = 0; i < result.Length; i++)
         {
@@ -22,6 +32,7 @@ public static class VectorMath
 
     public static double[] multiply(double[] a, double[] b)
     {
+        SameLength(a, b);
         double[] result = new double[a.Length];
         for (int i = 0; i < result.Length; i++)
         {
@@ -32,6 +43,7 @@ public static class VectorMath
 
     public static double[] divide(double[] a, double[] b)
     {
+        SameLength(a, b);
         double[] result = new double[a.Length];
         
         for (int i = 0; i < result.Length; i++)
