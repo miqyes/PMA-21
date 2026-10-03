@@ -4,11 +4,11 @@
     const string inputFile = "input.txt";
     const string outputFile = "output.txt";
 
-    public static void output(string text, double[] vecFirst, double[] vecSecond, double[] vecResult, char operation)
+    public static void output(double[] vecFirst, double[] vecSecond, double[] vecResult, char operation)
     {
         using (StreamWriter writer = new StreamWriter(outputFile, true))
         {
-            writer.WriteLine($"{text}({string.Join(";", vecFirst)}) {operation} ({string.Join(";", vecSecond)}) = ({string.Join(";", vecResult)})");
+            writer.WriteLine($"({string.Join(";", vecFirst)}) {operation} ({string.Join(";", vecSecond)}) = ({string.Join(";", vecResult)})");
         }
     }
 
@@ -18,50 +18,26 @@
 
         string[] lines = File.ReadAllLines(inputFile);
 
-        foreach (string line in lines)
+        if (lines.Length >= 2)
         {
-            if (string.IsNullOrWhiteSpace(line)) continue;
-
-            string[] vector = line.Split(new[] { '(', ')' }, StringSplitOptions.RemoveEmptyEntries); 
-            double[] vecFirst = vector[0].Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
-            char operation = vector[1].Trim()[0];
-            double[] vecSecond = vector[2].Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
+            double[] vecFirst = lines[0].Split( ',').Select(double.Parse).ToArray();
+            double[] vecSecond = lines[1].Split( ',').Select(double.Parse).ToArray();
             double[] result = null;
+            output(vecFirst, vecSecond, VectorMath.add(vecFirst, vecSecond), '+');
+            output(vecFirst, vecSecond, VectorMath.subtract(vecFirst, vecSecond), '-');
+            output(vecFirst, vecSecond, VectorMath.multiply(vecFirst, vecSecond), '*');
 
-            switch (operation)
+            try
             {
-                case '+':
-                    result = VectorMath.add(vecFirst, vecSecond);
-                    break;
-                case '-':
-                    result = VectorMath.subtract(vecFirst, vecSecond);
-                    break;
-                case '*':
-                    result = VectorMath.multiply(vecFirst, vecSecond);
-                    break;
-                case '/':
-                    try
-                    {
-                        result = VectorMath.divide(vecFirst, vecSecond);
-                    }
-                    catch (DivideByZeroException ex)
-                    {
-                        Console.WriteLine($"Problem in line '{line}': {ex.Message}");
-                    }
-                    break;
-                default:
-                    Console.WriteLine($"Unknown operation: {operation}");
-                    continue;
-
+                output(vecFirst, vecSecond, VectorMath.divide(vecFirst, vecSecond), '/');
+            }
+            catch (DivideByZeroException ex)
+            {
+                Console.WriteLine($"Problem with division: {ex.Message}");
             }
 
-            if (result != null)
-            {
-                output("Result: ", vecFirst, vecSecond, result, operation);
-            }
         }
-
-        Console.WriteLine("Done. Check the output file.");
+            Console.WriteLine("Done. Check the output file.");
 
     }
 
