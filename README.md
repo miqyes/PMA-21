@@ -35,6 +35,7 @@
 
 ### 3. Матриця
 Реалізувати калькулятор для матриць: операції додавання, віднімання, множення та ділення.
+
 * **Початкові умови:** матриці зберігаються у файлі (файлах).
 * **Результат:** файл, який записує і зберігає всі виконані дії.
 * **Зауваження:** 
@@ -42,8 +43,10 @@
   * Множення виконується за правилами лінійної алгебри.
   * Ділення обчислюється через обернену матрицю: $A / B = A \cdot B^{-1}$.
 * **Приклад:**
-  $$\begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} + \begin{pmatrix} 5 & 6 \\ 7 & 8 \end{pmatrix} = \begin{pmatrix} 6 & 8 \\ 10 & 12 \end{pmatrix}$$
-  $$\begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} \cdot \begin{pmatrix} 5 & 6 \\ 7 & 8 \end{pmatrix} = \begin{pmatrix} 19 & 22 \\ 43 & 50 \end{pmatrix}$$
+
+$$\begin{pmatrix} 1 & 2 & 3 & 4 \end{pmatrix} + \begin{pmatrix} 5 & 6 & 7 & 8 \end{pmatrix} = \begin{pmatrix} 6 & 8 & 10 & 12 \end{pmatrix}$$
+
+$$\begin{pmatrix} 1 & 2 & 3 & 4 \end{pmatrix} \cdot \begin{pmatrix} 5 & 6 & 7 & 8 \end{pmatrix} = \begin{pmatrix} 19 & 22 & 43 & 50 \end{pmatrix}$$
 
 ---
 
