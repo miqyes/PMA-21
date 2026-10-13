@@ -13,20 +13,23 @@ class Program
             Vector vecFirst = vectors[0];
             Vector vecSecond = vectors[1];
 
-            FileWorker.output(outputFile, vecFirst, vecSecond, vecFirst + vecSecond, '+');
-            FileWorker.output(outputFile, vecFirst, vecSecond, vecFirst - vecSecond, '-');
-            FileWorker.output(outputFile, vecFirst, vecSecond, vecFirst * vecSecond, '*');
+            string addStr = $"{vecFirst} + {vecSecond} = {vecFirst + vecSecond}";
+            string subStr = $"{vecFirst} - {vecSecond} = {vecFirst - vecSecond}";
+            string mulStr = $"{vecFirst} * {vecSecond} = {vecFirst * vecSecond}";
+            string divStr = "";
 
             try
             {
-                FileWorker.output(outputFile, vecFirst, vecSecond, vecFirst / vecSecond, '/');
+                divStr = $"{vecFirst} / {vecSecond} = {vecFirst / vecSecond}";
 
             }
             catch (DivideByZeroException ex)
             {
+                divStr = $"{vecFirst} / {vecSecond} = Error: Division by zero ({ex.Message})";
                 Console.WriteLine($"Problem with division: {ex.Message}");
             }
 
+            File.WriteAllLines(outputFile, new string[] { addStr, subStr, mulStr, divStr });
             Console.WriteLine("Done. Check the output file.");
         }
         catch (Exception ex)

@@ -23,12 +23,5 @@
             throw new Exception("Not enough lines in the input file");
 
         }
-        public static void output(string outputFile, Vector vecFirst, Vector vecSecond, Vector result, char operation)
-        {
-            using (StreamWriter writer = new StreamWriter(outputFile, true))
-            {
-                writer.WriteLine($"{vecFirst} {operation} {vecSecond} = {result}");
-            }
-        }
     }
 }

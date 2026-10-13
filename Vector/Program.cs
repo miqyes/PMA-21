@@ -4,40 +4,31 @@
     const string inputFile = "input.txt";
     const string outputFile = "output.txt";
 
-    public static void output(double[] vecFirst, double[] vecSecond, double[] vecResult, char operation)
-    {
-        using (StreamWriter writer = new StreamWriter(outputFile, true))
-        {
-            writer.WriteLine($"({string.Join(";", vecFirst)}) {operation} ({string.Join(";", vecSecond)}) = ({string.Join(";", vecResult)})");
-        }
-    }
-
     static void Main()
     {
-        File.WriteAllText(outputFile, "");
-
         string[] lines = File.ReadAllLines(inputFile);
 
         if (lines.Length >= 2)
         {
-            double[] vecFirst = lines[0].Split( ',').Select(double.Parse).ToArray();
-            double[] vecSecond = lines[1].Split( ',').Select(double.Parse).ToArray();
-            double[] result = null;
-            output(vecFirst, vecSecond, VectorMath.add(vecFirst, vecSecond), '+');
-            output(vecFirst, vecSecond, VectorMath.subtract(vecFirst, vecSecond), '-');
-            output(vecFirst, vecSecond, VectorMath.multiply(vecFirst, vecSecond), '*');
-
+            double[] vecFirst = lines[0].Split(',').Select(double.Parse).ToArray();
+            double[] vecSecond = lines[1].Split(',').Select(double.Parse).ToArray();
+            string addStr = $"({string.Join(";", vecFirst)}) + ({string.Join(";", vecSecond)}) = ({string.Join(";", VectorMath.add(vecFirst, vecSecond))})";
+            string subStr = $"({string.Join(";", vecFirst)}) - ({string.Join(";", vecSecond)}) = ({string.Join(";", VectorMath.subtract(vecFirst, vecSecond))})";
+            string mulStr = $"({string.Join(";", vecFirst)}) * ({string.Join(";", vecSecond)}) = ({string.Join(";", VectorMath.multiply(vecFirst, vecSecond))})";
+            string divStr = "";
             try
             {
-                output(vecFirst, vecSecond, VectorMath.divide(vecFirst, vecSecond), '/');
+                divStr = $"({string.Join(";", vecFirst)}) / ({string.Join(";", vecSecond)}) = ({string.Join(";", VectorMath.divide(vecFirst, vecSecond))})";
             }
             catch (DivideByZeroException ex)
             {
+                divStr = $"({string.Join(";", vecFirst)}) / ({string.Join(";", vecSecond)}) = Error: Division by zero ({ex.Message})";
                 Console.WriteLine($"Problem with division: {ex.Message}");
             }
 
-        }
+            File.WriteAllLines(outputFile, new string[] { addStr, subStr, mulStr, divStr });
             Console.WriteLine("Done. Check the output file.");
+        }
 
     }
 
