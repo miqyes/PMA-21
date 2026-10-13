@@ -10,11 +10,51 @@ class Vector(double[] elements)
         get { return elements.Length; }
     }
 
+    public Vector AddWithSteps(Vector other)
+{
+    int n = this.elements.Length;
+    double[] result = new double[n];
+
+    for (int i = 0; i < n; i++)
+    {
+        result[i] = this.elements[i] + other.elements[(i + 1) % n];
+    }
+
+    return new Vector(result);
+}
+
     public Vector Add(Vector other)
     {
         double[] result = [.. this.elements.Zip(other.elements, (a, b) => a + b)];
 
         return new Vector(result);
+    }
+
+    public Vector SubtractWithSteps(Vector other)
+    {
+    int n = this.elements.Length;
+    double[] result = new double[n];
+
+    for (int i = 0; i < n; i++)
+    {
+            // if (i + 1 >= n)
+            // {
+            //     result[i] = this.elements[i] - other.elements[0];
+            // }
+            // else
+            // {
+            //     result[i] = this.elements[i] - other.elements[i + 1];
+            // }
+            if (i == 0)
+            {
+                result[i] = this.elements[i]-other.elements[n-1];
+            }
+            else
+            {
+                result[i] = this.elements[i]-other.elements[i-1];
+            }
+    }
+    return new Vector(result);
     }
 
     public Vector Subtract(Vector other)

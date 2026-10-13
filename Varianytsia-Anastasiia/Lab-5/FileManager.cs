@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Specialized;
 
 class FileManager
 {
@@ -28,4 +29,7 @@ class FileManager
 
         Console.WriteLine("Результат збережено у " + filePath);
     }
+
+
 }
+

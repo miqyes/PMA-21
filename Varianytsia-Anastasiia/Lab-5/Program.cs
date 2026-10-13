@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 class Program
 {
@@ -19,6 +20,8 @@ class Program
             return;
         }
 
+        Vector vectorSumWithSteps = vectorOne.AddWithSteps(vectorTwo);
+        Vector vectorSubWithSteps = vectorOne.SubtractWithSteps(vectorTwo);
         Vector vectorSum = vectorOne.Add(vectorTwo);
         Vector subtractionResult = vectorOne.Subtract(vectorTwo);
         Vector multipliedVector = vectorOne.Multiply(vectorTwo);
@@ -28,6 +31,8 @@ class Program
 
         List<string> results =
         [
+            strVFirst + " + " + strVSecond + " (з кроками) = " + vectorSumWithSteps.ToString(),
+            strVFirst + "-" + strVSecond + "(з кроками) = " + vectorSubWithSteps.ToString(), 
             strVFirst + "+" + strVSecond + "= " + vectorSum.ToString(),
             strVFirst + "-" + strVSecond + "= " + subtractionResult.ToString(),
             strVFirst + "*" + strVSecond + "= " + multipliedVector.ToString(),
