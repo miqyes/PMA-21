@@ -87,7 +87,6 @@ class ArrayList
         return true;
     }
 
-    // Видалення першого елемента з вказаним значенням
     public bool RemoveByValue(int value)
     {
         for (int i = 0; i < count; i++)
