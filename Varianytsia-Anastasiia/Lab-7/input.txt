@@ -1,4 +1,4 @@
-Circle 5 Red
+Circle 7 Red
 Circle 5 Blue
 Rectangle 4 6 Blue
 Rectangle 2 3 Green

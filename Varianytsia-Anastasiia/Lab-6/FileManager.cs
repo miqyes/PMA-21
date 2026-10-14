@@ -17,10 +17,12 @@ class FileManager
 
         ArrayList list = new ArrayList();
 
-        foreach (int number in numbers)
-        {
-            list.Add(number);
-        }
+        numbers.ToList().ForEach(list.Add);
+        
+        // foreach (int number in numbers)
+        // {
+        //     list.Add(number);
+        // } // через linq
 
         return list;
     }
