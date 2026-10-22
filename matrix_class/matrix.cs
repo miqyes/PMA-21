@@ -59,10 +59,9 @@ public class MatrixCalculator : IMatrixCalculator
     public Matrix Subtract(Matrix a, Matrix b)
     {
         if (a.Rows != b.Rows || a.Cols != b.Cols)
-            throw new InvalidOperationException("" +
-                "Розміри матриць мають бути однаковими для додавання.");
+            throw new InvalidOperationException("Розміри матриць мають бути однаковими для додавання.");
 
-        var res = new Matrix(a.Rows, a.Cols);
+        var res = new Matrix(a.Rows, b.Cols);
         for (int i = 0; i < a.Rows; i++)
             for (int j = 0; j < a.Cols; j++)
                 res[i, j] = a[i, j] - b[i, j];
@@ -73,8 +72,7 @@ public class MatrixCalculator : IMatrixCalculator
     public Matrix Multiply(Matrix a, Matrix b)
     {
         if (a.Cols != b.Rows)
-            throw new InvalidOperationException("" + 
-                "Розміри матриць мають бути однаковими для додавання.");
+            throw new InvalidOperationException("Кількість стовпчиків першої матриці має дорівнювати кількості рядків другої.");
 
         var res = new Matrix(a.Rows, a.Cols);
         for (int i = 0; i < a.Rows; i++)
@@ -152,28 +150,64 @@ public class MatrixFileService
     public List<Matrix> ReadMatricesFromFile(string filePath)
     {
         var matrices = new List<Matrix>();
-        string[] tokens = File.ReadAllText(filePath)
-        .Split(new[] { ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        
+        string[] lines = File.ReadAllLines(filePath);
+        var currentRows = new List<double[]>();
 
-        int idx = 0;
-        while (idx < tokens.Length)
+        foreach (string line in lines)
         {
-            int rows = int.Parse(tokens[idx++]);
-            int cols = int.Parse(tokens[idx++]);
-
-            var matrix = new Matrix(rows, cols);
-            for (int i = 0; i < rows; i++)
+            string trimmed = line.Trim();
+            
+            if (string.IsNullOrWhiteSpace(trimmed))
             {
-                for (int j = 0; j < cols; j++)
+                if (currentRows.Count > 0)
                 {
-                    matrix[i, j] = double.Parse(tokens[idx++], CultureInfo.InvariantCulture);
+                    matrices.Add(CreateMatrixFromList(currentRows));
+                    currentRows.Clear();
                 }
+                continue;
             }
 
-            matrices.Add(matrix);
+            string[] tokens = trimmed.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+            double[] rowValues = new double[tokens.Length];
+
+            for (int i = 0; i < tokens.Length; i++)
+            {
+                rowValues[i] = double.Parse(tokens[i], CultureInfo.InvariantCulture);
+            }
+
+            currentRows.Add(rowValues);
+        }
+        
+        if (currentRows.Count > 0)
+        {
+            matrices.Add(CreateMatrixFromList(currentRows));
         }
 
         return matrices;
+    }
+
+    private Matrix CreateMatrixFromList(List<double[]> rowList)
+    {
+        int rows = rowList.Count;
+        int cols = rowList[0].Length;
+
+        var matrix = new Matrix(rows, cols);
+
+        for (int i = 0; i < rows; i++)
+        {
+            if (rowList[i].Length != cols)
+            {
+                throw new InvalidOperationException("Всі рядки однієї матриці повинні мати однакову кількість елементів.");
+            }
+
+            for (int j = 0; j < cols; j++)
+            {
+                matrix[i, j] = rowList[i][j];
+            }
+        }
+
+        return matrix;
     }
 
     public void AppendOperationLog(StreamWriter writer, string title, Matrix matrix)
