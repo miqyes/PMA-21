@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-public class Color
+public abstract class Color
 {
     public string Name { get; }
     public string HexCode { get; }
