@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace program
-{
     public static class FileManager
     {
         public static double[][] ReadVectors(string filePath)
@@ -36,4 +34,3 @@ namespace program
             File.WriteAllLines(filePath, lines);
         }
     }
-}

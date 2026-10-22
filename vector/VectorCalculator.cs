@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace program
-{
+
     public static class VectorOperations
     {
         private static void CheckDimensions(double[] a, double[] b)
@@ -77,4 +76,3 @@ namespace program
             return s;
         }
     }
-}
