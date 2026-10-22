@@ -45,8 +45,7 @@ public class MatrixCalculator : IMatrixCalculator
     public Matrix Add(Matrix a, Matrix b)
     {
         if (a.Rows != b.Rows || a.Cols != b.Cols)
-            throw new InvalidOperationException("" +
-                "Розміри матриць мають бути однаковими для додавання.");
+            throw new InvalidOperationException("Розміри матриць мають бути однаковими для додавання.");
 
         var res = new Matrix(a.Rows, a.Cols);
         for (int i = 0; i < a.Rows; i++)
@@ -59,9 +58,9 @@ public class MatrixCalculator : IMatrixCalculator
     public Matrix Subtract(Matrix a, Matrix b)
     {
         if (a.Rows != b.Rows || a.Cols != b.Cols)
-            throw new InvalidOperationException("Розміри матриць мають бути однаковими для додавання.");
+            throw new InvalidOperationException("Розміри матриць мають бути однаковими для віднімання.");
 
-        var res = new Matrix(a.Rows, b.Cols);
+        var res = new Matrix(a.Rows, a.Cols);
         for (int i = 0; i < a.Rows; i++)
             for (int j = 0; j < a.Cols; j++)
                 res[i, j] = a[i, j] - b[i, j];
@@ -74,7 +73,7 @@ public class MatrixCalculator : IMatrixCalculator
         if (a.Cols != b.Rows)
             throw new InvalidOperationException("Кількість стовпчиків першої матриці має дорівнювати кількості рядків другої.");
 
-        var res = new Matrix(a.Rows, a.Cols);
+        var res = new Matrix(a.Rows, b.Cols);
         for (int i = 0; i < a.Rows; i++)
             for(int t = 0; t < a.Cols; t++)
                 for (int j = 0; j < b.Cols; j++)
@@ -149,6 +148,9 @@ public class MatrixFileService
 {
     public List<Matrix> ReadMatricesFromFile(string filePath)
     {
+        if (!File.Exists(filePath))
+            throw new FileNotFoundException($"Файл: '{filePath}', не знайдено.");
+        
         var matrices = new List<Matrix>();
         
         string[] lines = File.ReadAllLines(filePath);
@@ -182,6 +184,11 @@ public class MatrixFileService
         if (currentRows.Count > 0)
         {
             matrices.Add(CreateMatrixFromList(currentRows));
+        }
+        
+        if (matrices.Count == 0)
+        {
+            throw new InvalidDataException("Файл порожній або не містить жодної коректної матриці.");
         }
 
         return matrices;
