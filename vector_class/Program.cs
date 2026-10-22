@@ -1,7 +1,6 @@
 ﻿using System;
 
-namespace program
-{
+
     class Program
     {
         static void Main()
@@ -22,4 +21,3 @@ namespace program
             VectorFileManager.WriteResults("output.txt", results);
         }
     }
-}

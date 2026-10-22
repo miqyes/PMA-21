@@ -2,9 +2,6 @@
 using System.Numerics;
 using System.Runtime.ExceptionServices;
 
-namespace program 
-{
-
     public class Vector
     {
         public double[] Coordinates;
@@ -30,7 +27,15 @@ namespace program
             CheckDimensions(a, b);
             double[] res = new double[a.Dimension];
             for (int i = 0; i < a.Dimension; i++)
-                res[i] = a.Coordinates[i] + b.Coordinates[i];
+            {
+                if (i == 0)
+                    res[i] = a.Coordinates[i] + b.Coordinates[a.Dimension - 1];
+                else if(i == a.Dimension - 1)
+                    res[i] = a.Coordinates[i] + b.Coordinates[0];
+                else
+                    res[i] = a.Coordinates[i] + b.Coordinates[i];
+            }
+
             return new Vector(res);
         }
 
@@ -115,4 +120,3 @@ namespace program
             File.WriteAllLines(filePath, result);
         }
     }
-}
