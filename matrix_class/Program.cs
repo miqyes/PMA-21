@@ -9,6 +9,12 @@
         var calc = new MatrixCalculator();
 
         List<Matrix> matrices = fileService.ReadMatricesFromFile("input.txt");
+        
+        if (matrices.Count < 2)
+        {
+            Console.WriteLine("Помилка: файл input.txt повинен містити щонайменше 2 матриці.");
+            return;
+        }
 
         Matrix a = matrices[0];
         Matrix b = matrices[1];
