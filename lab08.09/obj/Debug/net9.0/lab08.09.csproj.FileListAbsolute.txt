@@ -1,0 +1,17 @@
+/Users/ostaponufryk/RiderProjects/lab08.09/lab08.09/bin/Debug/net9.0/lab08.09
+/Users/ostaponufryk/RiderProjects/lab08.09/lab08.09/bin/Debug/net9.0/lab08.09.deps.json
+/Users/ostaponufryk/RiderProjects/lab08.09/lab08.09/bin/Debug/net9.0/lab08.09.runtimeconfig.json
+/Users/ostaponufryk/RiderProjects/lab08.09/lab08.09/bin/Debug/net9.0/lab08.09.dll
+/Users/ostaponufryk/RiderProjects/lab08.09/lab08.09/bin/Debug/net9.0/lab08.09.pdb
+/Users/ostaponufryk/RiderProjects/lab08.09/lab08.09/obj/Debug/net9.0/lab08.09.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ostaponufryk/RiderProjects/lab08.09/lab08.09/obj/Debug/net9.0/lab08.09.AssemblyInfoInputs.cache
+/Users/ostaponufryk/RiderProjects/lab08.09/lab08.09/obj/Debug/net9.0/lab08.09.AssemblyInfo.cs
+/Users/ostaponufryk/RiderProjects/lab08.09/lab08.09/obj/Debug/net9.0/lab08.09.csproj.CoreCompileInputs.cache
+/Users/ostaponufryk/RiderProjects/lab08.09/lab08.09/obj/Debug/net9.0/lab08.09.dll
+/Users/ostaponufryk/RiderProjects/lab08.09/lab08.09/obj/Debug/net9.0/refint/lab08.09.dll
+/Users/ostaponufryk/RiderProjects/lab08.09/lab08.09/obj/Debug/net9.0/lab08.09.pdb
+/Users/ostaponufryk/RiderProjects/lab08.09/lab08.09/obj/Debug/net9.0/lab08.09.genruntimeconfig.cache
+/Users/ostaponufryk/RiderProjects/lab08.09/lab08.09/obj/Debug/net9.0/ref/lab08.09.dll
+/Users/ostaponufryk/RiderProjects/lab08.09/lab08.09/bin/Debug/net9.0/input.txt
+/Users/ostaponufryk/RiderProjects/lab08.09/lab08.09/bin/Debug/net9.0/steps.txt
+/Users/ostaponufryk/RiderProjects/lab08.09/lab08.09/obj/Debug/net9.0/lab08.09.sourcelink.json
