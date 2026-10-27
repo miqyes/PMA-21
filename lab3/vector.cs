@@ -1,69 +1,56 @@
-﻿using System;
-
-namespace vector
+namespace classVector
 {
-    public class vector
+    public class Vector
     {
-        public double[] components;
-
-        public int Size => components.Length;
-
-        public vector(double[] components)
+        public double[] coordinates;
+        public Vector(double[] coordinates)
         {
-            this.components = components;
+            this.coordinates = coordinates;
         }
-
-        public double this[int index]
+        public Vector add(Vector other)
         {
-            get => components[index];
-            set => components[index] = value;
+            double[]result=new double[coordinates.Length];
+            for(int i = 0; i < result.Length; i++)
+            {
+                result[i] = coordinates[i] + other.coordinates[i];
+            }
+            return new Vector(result);
         }
-
-        private static void CheckSameSize(vector a, vector b)
+        public Vector subtract(Vector other)
         {
-            if (a.Size != b.Size)
-                throw new ArgumentException("Vectors must have the same dimension!");
+            double[] result = new double[coordinates.Length];
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = coordinates[i] - other.coordinates[i];
+            }
+            return new Vector(result);
         }
-
-        public static vector operator +(vector a, vector b)
+        public Vector multiply(Vector other)
         {
-            CheckSameSize(a, b);
-            double[] result = new double[a.Size];
-            for (int i = 0; i < a.Size; i++)
-                result[i] = a[i] + b[i];
-            return new vector(result);
+            double[] result = new double[coordinates.Length];
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = coordinates[i] * other.coordinates[i];
+            }
+            return new Vector(result);
         }
-
-        public static vector operator -(vector a, vector b)
+        public Vector divide(Vector other)
         {
-            CheckSameSize(a, b);
-            double[] result = new double[a.Size];
-            for (int i = 0; i < a.Size; i++)
-                result[i] = a[i] - b[i];
-            return new vector(result);
+            double[] result = new double[coordinates.Length];
+            for (int i = 0; i < result.Length; i++)
+                if (other.coordinates[i] == 0)
+                {
+                    throw new DivideByZeroException("Division by zero in coordinate  " + i);
+                }
+                else
+                {
+                    result[i] = coordinates[i] / other.coordinates[i];
+                }
+            return new Vector(result);
         }
-
-        public static vector operator *(vector a, vector b)
-        {
-            CheckSameSize(a, b);
-            double[] result = new double[a.Size];
-            for (int i = 0; i < a.Size; i++)
-                result[i] = a[i] * b[i];
-            return new vector(result);
-        }
-
-        public static vector operator /(vector a, vector b)
-        {
-            CheckSameSize(a, b);
-            double[] result = new double[a.Size];
-            for (int i = 0; i < a.Size; i++)
-                result[i] = a[i] / b[i];
-            return new vector(result);
-        }
-
         public override string ToString()
         {
-            return "(" + string.Join(",", components) + ")";
+            return "(" + string.Join("; ", coordinates) + ")";
         }
     }
 }
