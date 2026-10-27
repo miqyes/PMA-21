@@ -1,85 +1,56 @@
-namespace matrixLab
+using System;
+using System.IO;
+
+namespace matrix
 {
     class Program
     {
-        static void Main(string[] args)
+        const string firstMatrixFile = "firstMatrixInput.txt";
+        const string secondMatrixFile = "secondMatrixInput.txt";
+        const string resultFile = "result.txt";
+
+        static void Main()
         {
             try
             {
-                string inputFilePath = "input.txt";
-                string outputFilePath = "result.txt";
-                if (!File.Exists(inputFilePath))
-                {
-                    throw new FileNotFoundException($"Input file not found at: {inputFilePath}");
-                }
-                string fileContent = File.ReadAllText(inputFilePath);
-                List<double[,]> matrices = Matrix.parseMatricesFromFile(fileContent);
+                double[,] firstMatrix = Format.ReadMatrix(firstMatrixFile);
+                double[,] secondMatrix = Format.ReadMatrix(secondMatrixFile);
 
-                if (matrices.Count < 2)
+                using (StreamWriter writer = new StreamWriter(resultFile))
                 {
-                    throw new InvalidOperationException("The file must contain at least two matrices.");
+                    WriteOperationBlock(writer, firstMatrix, "+", secondMatrix, Matrix.addMatrix(firstMatrix, secondMatrix));
+                    WriteOperationBlock(writer, firstMatrix, "-", secondMatrix, Matrix.subtractMatrix(firstMatrix, secondMatrix));
+                    WriteOperationBlock(writer, firstMatrix, "*", secondMatrix, Matrix.multiplyMatrix(firstMatrix, secondMatrix));
+                    WriteOperationBlock(writer, firstMatrix, "/", secondMatrix, Matrix.divisionMatrix(firstMatrix, secondMatrix));
                 }
 
-                double[,] matrixA = matrices[0];
-                double[,] matrixB = matrices[1];
-
-                using (StreamWriter writer = new StreamWriter(outputFilePath))
-                {
-                    writer.WriteLine("Initial matrix:");
-                    writer.WriteLine("Matrix A:");
-                    Matrix.writeMatrixToStream(writer, matrixA);
-
-                    writer.WriteLine("Matrix B:");
-                    Matrix.writeMatrixToStream(writer, matrixB);
-                    writer.WriteLine();
-                    writer.WriteLine("Addition");
-                    try
-                    {
-                        double[,] addResult = Matrix.addMatrices(matrixA, matrixB);
-                        Matrix.writeMatrixToStream(writer, addResult);
-                    }
-                    catch (Exception ex)
-                    {
-                        writer.WriteLine($"Could not perform addition: {ex.Message}");
-                    }
-                    writer.WriteLine();
-                    writer.WriteLine("Subtraction");
-                    try
-                    {
-                        double[,] subResult = Matrix.subtractMatrices(matrixA, matrixB);
-                        Matrix.writeMatrixToStream(writer, subResult);
-                    }
-                    catch (Exception ex)
-                    {
-                        writer.WriteLine($"Could not perform subtraction: {ex.Message}");
-                    }
-                    writer.WriteLine();
-                    writer.WriteLine("Multiplication");
-                    try
-                    {
-                        double[,] mulResult = Matrix.multiplyMatrices(matrixA, matrixB);
-                        Matrix.writeMatrixToStream(writer, mulResult);
-                    }
-                    catch (Exception ex)
-                    {
-                        writer.WriteLine($"Could not perform multiplication: {ex.Message}");
-                    }
-                    writer.WriteLine();
-                    writer.WriteLine("Division");
-                    try
-                    {
-                        double[,] divResult = Matrix.divideMatrices(matrixA, matrixB);
-                        Matrix.writeMatrixToStream(writer, divResult);
-                    }
-                    catch (Exception ex)
-                    {
-                        writer.WriteLine($"Could not perform division: {ex.Message}");
-                    }
-                }
+                Console.WriteLine("Result is saved in " + resultFile);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine("Error: " + exception.Message);
+            }
+        }
+
+        static void WriteOperationBlock(StreamWriter writer, double[,] matrix1, string sign, double[,] matrix2, double[,] result)
+        {
+            WriteMatrix(writer, matrix1);
+            writer.WriteLine(sign);
+            WriteMatrix(writer, matrix2);
+            writer.WriteLine("=");
+            WriteMatrix(writer, result);
+            writer.WriteLine(); 
+        }
+
+        static void WriteMatrix(StreamWriter writer, double[,] matrix)
+        {
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    writer.Write(matrix[i, j] + "\t");
+                }
+                writer.WriteLine();
             }
         }
     }
