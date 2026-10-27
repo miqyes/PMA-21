@@ -1,74 +1,59 @@
-﻿namespace vector
+namespace classVector;
+class Program
 {
-    class program
+    const string firstVectorFile = "firstVectorInput.txt";
+    const string secondVectorFile = "secondVectorInput.txt";
+    static Vector ReadVector(string filePath)
     {
-        public static void Main()
+        string[] parts = File.ReadAllText(filePath)
+            .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+        double[] numbers = new double[parts.Length];
+        for (int i = 0; i < parts.Length; i++)
         {
-            if (!File.Exists("input.txt"))
-            {
-                Console.WriteLine("Error: file are not found!");
-                return;
-            }
+            numbers[i] = double.Parse(parts[i]);
+        }
 
-            string[] lines = File.ReadAllLines("input.txt");
-            if (lines.Length < 2)
-            {
-                Console.WriteLine("Error: file must contain at least 2 lines!");
-                return;
-            }
+        return new Vector(numbers);
+    }
+    static void Main()
+    {
+        try
+        {
+            Vector firstVector = ReadVector(firstVectorFile);
+            Vector secondVector = ReadVector(secondVectorFile);
 
-            string[] firstNumbers = lines[0].Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            string[] secondNumbers = lines[1].Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-            if (firstNumbers.Length != secondNumbers.Length)
-            {
-                Console.WriteLine("Error: both vectors must have the same number of components!");
-                return;
-            }
+            string addResult = $"{firstVector} + {secondVector} = {firstVector.add(secondVector)}";
+            string subtractResult = $"{firstVector} - {secondVector} = {firstVector.subtract(secondVector)}";
+            string multiplyResult = $"{firstVector} * {secondVector} = {firstVector.multiply(secondVector)}";
+            string divisionResult;
 
-            double[] arr1;
-            double[] arr2;
             try
             {
-                arr1 = firstNumbers.Select(double.Parse).ToArray();
-                arr2 = secondNumbers.Select(double.Parse).ToArray();
+                divisionResult = $"{firstVector} / {secondVector} = {firstVector.divide(secondVector)}";
             }
-            catch (FormatException)
+            catch (DivideByZeroException exception)
             {
-                Console.WriteLine("Error: file must contain only numbers!");
-                return;
+                divisionResult = $"{firstVector} / {secondVector} = Error: {exception.Message}";
             }
 
-            vector v1 = new vector(arr1);
-            vector v2 = new vector(arr2);
+            string[] resultLines = { addResult, subtractResult, multiplyResult, divisionResult };
+            File.WriteAllLines("result.txt", resultLines);
 
-            vector sum = v1 + v2;
-            vector difference = v1 - v2;
-            vector product = v1 * v2;
-
-            // Перевірка на нуль тільки для ділення
-            bool hasZero = arr2.Any(c => c == 0);
-            string quotientLine;
-
-            if (hasZero)
-            {
-                quotientLine = "Quotient= " + v1 + "/" + v2 + "=ПОМИЛКА: ДІЛЕННЯ НА НУЛЬ НЕ МОЖЛИВЕ";
-            }
-            else
-            {
-                vector quotient = v1 / v2;
-                quotientLine = "Quotient=" + v1 + "/" + v2 + "=" + quotient;
-            }
-
-            string result = "First vector: " + v1 + Environment.NewLine +
-                "Second vector: " + v2 + Environment.NewLine +
-                "Sum=" + v1 + "+" + v2 + "=" + sum + Environment.NewLine +
-                "Difference=" + v1 + "-" + v2 + "=" + difference + Environment.NewLine +
-                "Product=" + v1 + "*" + v2 + "=" + product + Environment.NewLine +
-                quotientLine;
-
-            File.WriteAllText("result.txt", result);
             Console.WriteLine("Result is successfully saved in file 'result.txt'");
+        }
+        catch (ArgumentException exception)
+        {
+            Console.WriteLine($"Data entry error: {exception.Message}");
+        }
+        catch (FileNotFoundException exception)
+        {
+            Console.WriteLine($"Mistake in file: {exception.Message}");
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine($"Error: {exception.Message}");
         }
     }
 }
