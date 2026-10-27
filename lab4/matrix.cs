@@ -1,227 +1,163 @@
 using System;
-
-namespace matrixLab
+namespace matrix
 {
-    public static class Matrix
+    class Matrix
     {
-        public static List<double[,]> parseMatricesFromFile(string content)
+        public static double[,] addMatrix(double[,] firstMatrix, double[,] secondMatrix)
         {
-            List<double[,]> result = new List<double[,]>();
-            string[] rawMatrices = content.Split(new string[] { "\r\n\r\n", "\n\n" }, StringSplitOptions.RemoveEmptyEntries);
+            checkSameSize(firstMatrix, secondMatrix);
 
-            foreach (string rawMatrix in rawMatrices)
+            int rows = firstMatrix.GetLength(0);
+            int columns = firstMatrix.GetLength(1);
+            double[,] resultMatrix = new double[rows, columns];
+
+            for (int i = 0; i < rows; i++)
             {
-                string[] lines = rawMatrix.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                List<double[]> rowList = new List<double[]>();
-
-                foreach (string line in lines)
+                for (int j = 0; j < columns; j++)
                 {
-                    string[] elements = line.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (elements.Length == 0) continue;
+                    resultMatrix[i, j] = firstMatrix[i, j] + secondMatrix[i, j];
+                }
+            }
 
-                    double[] row = new double[elements.Length];
-                    for (int i = 0; i < elements.Length; i++)
+            return resultMatrix;
+        }
+
+        public static double[,] subtractMatrix(double[,] firstMatrix, double[,] secondMatrix)
+        {
+            checkSameSize(firstMatrix, secondMatrix);
+
+            int rows = firstMatrix.GetLength(0);
+            int columns = firstMatrix.GetLength(1);
+            double[,] resultMatrix = new double[rows, columns];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    resultMatrix[i, j] = firstMatrix[i, j] - secondMatrix[i, j];
+                }
+            }
+
+            return resultMatrix;
+        }
+
+        public static double[,] multiplyMatrix(double[,] firstMatrix, double[,] secondMatrix)
+        {
+            if (firstMatrix.GetLength(1) != secondMatrix.GetLength(0))
+            {
+                throw new ArgumentException("Columns count of the first matrix must be equal to rows count of the second matrix");
+            }
+
+            int rows = firstMatrix.GetLength(0);
+            int columns = secondMatrix.GetLength(1);
+            int commonSize = firstMatrix.GetLength(1);
+            double[,] resultMatrix = new double[rows, columns];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    for (int commonIndex = 0; commonIndex < commonSize; commonIndex++)
                     {
-                        if (!double.TryParse(elements[i], out row[i]))
-                        {
-                            throw new FormatException($"Invalid number format: '{elements[i]}'");
-                        }
+                        resultMatrix[i, j] += firstMatrix[i, commonIndex] * secondMatrix[commonIndex, j];
                     }
-                    rowList.Add(row);
-                }
-
-                if (rowList.Count > 0)
-                {
-                    int rows = rowList.Count;
-                    int cols = rowList[0].Length;
-                    double[,] matrix = new double[rows, cols];
-
-                    for (int r = 0; r < rows; r++)
-                    {
-                        if (rowList[r].Length != cols)
-                        {
-                            throw new ArgumentException("Matrix rows must have the same number of columns.");
-                        }
-                        for (int c = 0; c < cols; c++)
-                        {
-                            matrix[r, c] = rowList[r][c];
-                        }
-                    }
-                    result.Add(matrix);
                 }
             }
 
-            return result;
+            return resultMatrix;
         }
-        public static double[,] addMatrices(double[,] a, double[,] b)
+
+        public static double[,] divisionMatrix(double[,] firstMatrix, double[,] secondMatrix)
         {
-            int rowsA = a.GetLength(0);
-            int colsA = a.GetLength(1);
-            int rowsB = b.GetLength(0);
-            int colsB = b.GetLength(1);
+            double[,] inverse = inverseMatrix(secondMatrix);
 
-            if (rowsA != rowsB || colsA != colsB)
-            {
-                throw new ArgumentException("Matrices must have identical dimensions for addition.");
-            }
-
-            double[,] result = new double[rowsA, colsA];
-            for (int i = 0; i < rowsA; i++)
-            {
-                for (int j = 0; j < colsA; j++)
-                {
-                    result[i, j] = a[i, j] + b[i, j];
-                }
-            }
-            return result;
+            return multiplyMatrix(firstMatrix, inverse);
         }
-        public static double[,] subtractMatrices(double[,] a, double[,] b)
+
+        public static double determinant(double[,] matrix)
         {
-            int rowsA = a.GetLength(0);
-            int colsA = a.GetLength(1);
-            int rowsB = b.GetLength(0);
-            int colsB = b.GetLength(1);
+            checkSquare(matrix);
 
-            if (rowsA != rowsB || colsA != colsB)
+            int size = matrix.GetLength(0);
+
+            if (size == 1)
             {
-                throw new ArgumentException("Matrices must have identical dimensions for subtraction.");
+                return matrix[0, 0];
             }
 
-            double[,] result = new double[rowsA, colsA];
-            for (int i = 0; i < rowsA; i++)
+            if (size == 2)
             {
-                for (int j = 0; j < colsA; j++)
-                {
-                    result[i, j] = a[i, j] - b[i, j];
-                }
+                return matrix[0, 0] * matrix[1, 1] - matrix[0, 1] * matrix[1, 0];
             }
-            return result;
+
+            if (size == 3)
+            {
+                double result =
+                      matrix[0, 0] * (matrix[1, 1] * matrix[2, 2] - matrix[1, 2] * matrix[2, 1])
+                    - matrix[0, 1] * (matrix[1, 0] * matrix[2, 2] - matrix[1, 2] * matrix[2, 0])
+                    + matrix[0, 2] * (matrix[1, 0] * matrix[2, 1] - matrix[1, 1] * matrix[2, 0]);
+
+                return result;
+            }
+            throw new ArgumentException("Supported matrix sizes are 1x1, 2x2 and 3x3");
         }
-        public static double[,] multiplyMatrices(double[,] a, double[,] b)
+
+        public static double[,] inverseMatrix(double[,] matrix)
         {
-            int rowsA = a.GetLength(0);
-            int colsA = a.GetLength(1);
-            int rowsB = b.GetLength(0);
-            int colsB = b.GetLength(1);
+            checkSquare(matrix);
 
-            if (colsA != rowsB)
+            double determinantValue = determinant(matrix);
+
+            if (Math.Abs(determinantValue) ==0)
             {
-                throw new ArgumentException("Columns of matrix A must equal rows of matrix B.");
+                throw new DivideByZeroException("Division by zero is impossible: determinant of the second matrix is 0");
             }
 
-            double[,] result = new double[rowsA, colsB];
-            for (int i = 0; i < rowsA; i++)
+            int size = matrix.GetLength(0);
+            double[,] inverse = new double[size, size];
+
+            if (size == 1)
             {
-                for (int j = 0; j < colsB; j++)
-                {
-                    double sum = 0;
-                    for (int k = 0; k < colsA; k++)
-                    {
-                        sum += a[i, k] * b[k, j];
-                    }
-                    result[i, j] = sum;
-                }
+                inverse[0, 0] = 1 / determinantValue;
             }
-            return result;
-        }
-        public static double[,] divideMatrices(double[,] a, double[,] b)
-        {
-            int rowsB = b.GetLength(0);
-            int colsB = b.GetLength(1);
-
-            if (rowsB != colsB)
+            else if (size == 2)
             {
-                throw new ArgumentException("Divisor matrix must be square.");
+                inverse[0, 0] = matrix[1, 1] / determinantValue;
+                inverse[0, 1] = -matrix[0, 1] / determinantValue;
+                inverse[1, 0] = -matrix[1, 0] / determinantValue;
+                inverse[1, 1] = matrix[0, 0] / determinantValue;
             }
-
-            double[,] inverseB = getInverseMatrix(b);
-            return multiplyMatrices(a, inverseB);
-        }
-        public static double[,] getInverseMatrix(double[,] matrix)
-        {
-            int n = matrix.GetLength(0);
-            double det = calculateDeterminant(matrix);
-
-            if (Math.Abs(det) < 1e-9)
+            else if (size == 3)
             {
-                throw new InvalidOperationException("Matrix determinant is zero (inverse does not exist).");
-            }
+                inverse[0, 0] = (matrix[1, 1] * matrix[2, 2] - matrix[1, 2] * matrix[2, 1]) / determinantValue;
+                inverse[0, 1] = (matrix[0, 2] * matrix[2, 1] - matrix[0, 1] * matrix[2, 2]) / determinantValue;
+                inverse[0, 2] = (matrix[0, 1] * matrix[1, 2] - matrix[0, 2] * matrix[1, 1]) / determinantValue;
 
-            if (n == 1)
-            {
-                double[,] res = new double[1, 1];
-                res[0, 0] = 1.0 / matrix[0, 0];
-                return res;
-            }
+                inverse[1, 0] = (matrix[1, 2] * matrix[2, 0] - matrix[1, 0] * matrix[2, 2]) / determinantValue;
+                inverse[1, 1] = (matrix[0, 0] * matrix[2, 2] - matrix[0, 2] * matrix[2, 0]) / determinantValue;
+                inverse[1, 2] = (matrix[0, 2] * matrix[1, 0] - matrix[0, 0] * matrix[1, 2]) / determinantValue;
 
-            double[,] adjugate = new double[n, n];
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    double[,] sub = getSubmatrix(matrix, i, j);
-                    double cofactor = Math.Pow(-1, i + j) * calculateDeterminant(sub);
-                    adjugate[j, i] = cofactor;
-                }
-            }
-
-            double[,] inverse = new double[n, n];
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    inverse[i, j] = adjugate[i, j] / det;
-                }
+                inverse[2, 0] = (matrix[1, 0] * matrix[2, 1] - matrix[1, 1] * matrix[2, 0]) / determinantValue;
+                inverse[2, 1] = (matrix[0, 1] * matrix[2, 0] - matrix[0, 0] * matrix[2, 1]) / determinantValue;
+                inverse[2, 2] = (matrix[0, 0] * matrix[1, 1] - matrix[0, 1] * matrix[1, 0]) / determinantValue;
             }
 
             return inverse;
         }
-        public static double calculateDeterminant(double[,] matrix)
-        {
-            int n = matrix.GetLength(0);
-            if (n == 1) return matrix[0, 0];
-            if (n == 2) return matrix[0, 0] * matrix[1, 1] - matrix[0, 1] * matrix[1, 0];
 
-            double det = 0;
-            for (int col = 0; col < n; col++)
+        private static void checkSquare(double[,] matrix)
+        {
+            if (matrix.GetLength(0) != matrix.GetLength(1))
             {
-                double[,] sub = getSubmatrix(matrix, 0, col);
-                det += Math.Pow(-1, col) * matrix[0, col] * calculateDeterminant(sub);
+                throw new ArgumentException("Matrix must be square");
             }
-            return det;
         }
-        public static double[,] getSubmatrix(double[,] matrix, int excludeRow, int excludeCol)
-        {
-            int n = matrix.GetLength(0);
-            double[,] sub = new double[n - 1, n - 1];
-            int subRow = 0;
 
-            for (int i = 0; i < n; i++)
-            {
-                if (i == excludeRow) continue;
-                int subCol = 0;
-                for (int j = 0; j < n; j++)
-                {
-                    if (j == excludeCol) continue;
-                    sub[subRow, subCol] = matrix[i, j];
-                    subCol++;
-                }
-                subRow++;
-            }
-            return sub;
-        }
-        public static void writeMatrixToStream(StreamWriter writer, double[,] matrix)
+        private static void checkSameSize(double[,] firstMatrix, double[,] secondMatrix)
         {
-            int rows = matrix.GetLength(0);
-            int cols = matrix.GetLength(1);
-
-            for (int i = 0; i < rows; i++)
+            if (firstMatrix.GetLength(0) != secondMatrix.GetLength(0) || firstMatrix.GetLength(1) != secondMatrix.GetLength(1))
             {
-                for (int j = 0; j < cols; j++)
-                {
-                    writer.Write($"{matrix[i, j]:F2}\t");
-                }
-                writer.WriteLine();
+                throw new ArgumentException("Different size of matrices");
             }
         }
     }
