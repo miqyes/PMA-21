@@ -1,150 +1,100 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
+﻿using System.Runtime.CompilerServices;
 
-namespace ClassMatrixCalculator
+namespace vector
 {
     class Program
     {
-        static string MatrixToString(Matrix m)
-        {
-            string result = "";
-
-            foreach (List<float> row in m.getMatrix())
-            {
-                foreach (float value in row)
-                {
-                    result += value + " ";
-                }
-
-                result += "\n";
-            }
-
-            return result;
-        }
-
-        static List<List<float>> ReadMatrixFromFile(string fileName)
-        {
-
-
-
-            string[] matrixRows = File.ReadAllLines(fileName);
-
-            List<List<float>> matrix = new List<List<float>>();
-
-            foreach (string row in matrixRows)
-            {
-                if (string.IsNullOrWhiteSpace(row))
-                {
-                    continue;
-                }
-
-                List<float> rowElements = row
-                    .Split(' ', StringSplitOptions.RemoveEmptyEntries)
-                    .Select(float.Parse)
-                    .ToList();
-
-                matrix.Add(rowElements);
-            }
-
-            return matrix;
-        }
-
-
-
-
-
-
         static void Main()
-            {
-                const string RESULT_FILE = "resultMatrix.txt";
-                List<List<float>> firstMatrix = new List<List<float>>();
-                List<List<float>> secondMatrix = new List<List<float>>();
-                List<List<float>> thirdMatrix = new List<List<float>>();
-
-                firstMatrix = ReadMatrixFromFile("firstMatrix.txt");
-
-                secondMatrix = ReadMatrixFromFile("secondMatrix.txt");
-
-
-
-                Matrix first = new Matrix(firstMatrix);
-                Matrix second = new Matrix(secondMatrix);
-                Matrix matrix = first;
-                Matrix resultMatrix;
-
-               
-
-                try
-                {
-                    resultMatrix = Matrix.SumMatrix(first, second);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    return;
-                }
-
-                File.WriteAllText(RESULT_FILE, "Sum matrix: \n" + MatrixToString(resultMatrix) + "\n");
-
-                try
-                {
-                    resultMatrix = Matrix.ProductMatrix(first, second);
-
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    return;
-                }
-
-                File.AppendAllText(RESULT_FILE, "Product matrix: \n" + MatrixToString(resultMatrix) + "\n");
-
-                try
-                {
-                    resultMatrix = Matrix.DifferenceMatrix(first, second);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    return;
-                }
-
-                File.AppendAllText(RESULT_FILE, "Difference matrix: \n" + MatrixToString(resultMatrix) + "\n");
-
-                try
-                {
-                    resultMatrix = Matrix.InverseMatrix(matrix);
-
-
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    return;
-                }
-
-                File.AppendAllText(RESULT_FILE, "Inverse matrix:\n" + MatrixToString(resultMatrix) + "\n");
-
-                try
-                {
-                    resultMatrix = Matrix.DivisionMatrix(first, second);
-
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    return;
-                }
-
-                File.AppendAllText(RESULT_FILE, "Division matrix: \n" + MatrixToString(resultMatrix) + "\n");
-
-
-
-
-
-
-            }
+        { 
+            const string RESULT_FILE = "result.txt";
+            List<float> firstVector = new List<float>();
+            List<float> secondVector = new List<float>();
+            
+            
+            
+        string vectorNumbersFirst = File.ReadAllText("firstVector.txt");
+        List<string> vectorNumbersFirstList = vectorNumbersFirst.Split(',').ToList();
+        try
+        {
+            
+            firstVector = vectorNumbersFirstList.Select(float.Parse).ToList();
         }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            return;
+        }
+        
+        string vectorNumbersSecond = File.ReadAllText("secondVector.txt");
+        List<string> vectorNumbersSecondList = vectorNumbersSecond.Split(',').ToList();
+        try
+        {
+            secondVector=vectorNumbersSecondList.Select(float.Parse).ToList();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        
+        Vector first = new Vector(firstVector);
+        Vector second = new Vector(secondVector);
+        Vector thirdVector;
+        try
+        { 
+            thirdVector = Vector.productVector(first, second);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            return;
+        }
+
+        string  resultVector = Vector.GetStringFromVector(thirdVector);
+        File.WriteAllText(RESULT_FILE, "Product Vector: (" + resultVector + ")\n");
+
+        try
+        {
+            thirdVector = first.sumVector( second);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            return;
+        }
+
+        resultVector = Vector.GetStringFromVector(thirdVector);
+        File.AppendAllText(RESULT_FILE, "Sum Vector:("+resultVector+")\n");
+
+        try
+        {
+            thirdVector = Vector.differenceVector(first, second);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            return;
+        }
+
+        resultVector = Vector.GetStringFromVector(thirdVector);
+        File.AppendAllText(RESULT_FILE, "Difference Vector:("+resultVector+")\n");
+
+        try
+        {
+            thirdVector = Vector.divisionVector(first, second);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            return;
+        }
+
+        resultVector = Vector.GetStringFromVector(thirdVector);
+        File.AppendAllText(RESULT_FILE, "Division Vector:("+resultVector+")\n");
+
+
+        
+
     }
+        
+}
+}
