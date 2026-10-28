@@ -23,5 +23,6 @@
             throw new Exception("Not enough lines in the input file");
 
         }
+
     }
 }

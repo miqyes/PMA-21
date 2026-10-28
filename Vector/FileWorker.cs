@@ -1,0 +1,22 @@
+﻿static class FileWorker
+{
+    public static double[][] input(string inputFile)
+    {
+        if (!File.Exists(inputFile))
+        {
+            throw new Exception("File not found: " + inputFile);
+        }
+
+        string[] lines = File.ReadAllLines(inputFile);
+
+        if (lines.Length >= 2)
+        {
+            double[] vecFirst = lines[0].Split(',').Select(double.Parse).ToArray();
+            double[] vecSecond = lines[1].Split(',').Select(double.Parse).ToArray();
+
+            return new double[][] { vecFirst, vecSecond };
+        }
+
+        throw new Exception("Not enough lines in the input file");
+    }
+}

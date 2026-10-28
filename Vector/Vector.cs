@@ -1,4 +1,4 @@
-public static class VectorMath
+﻿public static class VectorMath
 {
 
     private static void SameLength(double[] a, double[] b)
@@ -11,6 +11,7 @@ public static class VectorMath
     public static double[] add(double[] a, double[] b)
     {
         SameLength(a, b);
+
         double[] result = new double[a.Length];
         for (int i = 0; i < result.Length; i++)
         {
@@ -50,7 +51,7 @@ public static class VectorMath
         {
             if (b[i] == 0)
             {
-                throw new DivideByZeroException("division by zero is impossible at index" + i);
+                throw new DivideByZeroException("division by zero is impossible at index " + i);
             }
             result[i] = a[i] / b[i];
         }
