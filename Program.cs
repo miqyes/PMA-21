@@ -1,100 +1,93 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace vector
+﻿namespace Vector
 {
     class Program
     {
         static void Main()
-        { 
-            const string RESULT_FILE = "result.txt";
-            List<float> firstVector = new List<float>();
-            List<float> secondVector = new List<float>();
+        {
+            List<float> vectorFirst;
+            List<float> vectorSecond;
+            List<float> vectorThird = new List<float>();
+            const string RESULT_FILE = "vectorresult.txt";
+
+
+            //using key word
+            string vectorNumbersFirst = File.ReadAllText("vectorfirst.txt");
+            List<string> vectorNumbersFirstList = vectorNumbersFirst.Split(',').ToList();
+            try
+            {
+                //linq
+                vectorFirst = vectorNumbersFirstList.Select(float.Parse).ToList();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return;
+            }
+
+            string vectorNumbersSecond = File.ReadAllText("vectorsecond.txt");
+            List<string> vectorNumbersSecondList = vectorNumbersSecond.Split(',').ToList();
+            try
+            {
+                vectorSecond = vectorNumbersSecondList.Select(float.Parse).ToList();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return;
+            }
+
+            try
+            { 
+                MathOperation.productVector(vectorFirst, vectorSecond);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                
+            }
+            
+            string vectorResult = string.Join("; ", vectorThird);
+            File.WriteAllText(RESULT_FILE, string.Format("{0}: ({1})\n", "Product Vector", vectorResult));
+            
+            try
+            {
+                vectorThird = MathOperation.sumVector(vectorFirst, vectorSecond);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
+            vectorResult = string.Join("; ", vectorThird);
+            File.AppendAllText(RESULT_FILE, string.Format("{0}: ({1})\n", "Sum Vector", vectorResult));
+
+            try
+            {
+                vectorThird = MathOperation.differenceVector(vectorFirst, vectorSecond);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            vectorResult = string.Join(";", vectorThird);
+            File.AppendAllText(RESULT_FILE, string.Format("{0}: ({1})\n", "Difference Vector", vectorResult));
+
+            try
+            {
+                vectorThird = MathOperation.divisionVector(vectorFirst, vectorSecond);
+                
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
             
             
-            
-        string vectorNumbersFirst = File.ReadAllText("firstVector.txt");
-        List<string> vectorNumbersFirstList = vectorNumbersFirst.Split(',').ToList();
-        try
-        {
-            
-            firstVector = vectorNumbersFirstList.Select(float.Parse).ToList();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-            return;
-        }
-        
-        string vectorNumbersSecond = File.ReadAllText("secondVector.txt");
-        List<string> vectorNumbersSecondList = vectorNumbersSecond.Split(',').ToList();
-        try
-        {
-            secondVector=vectorNumbersSecondList.Select(float.Parse).ToList();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        
-        Vector first = new Vector(firstVector);
-        Vector second = new Vector(secondVector);
-        Vector thirdVector;
-        try
-        { 
-            thirdVector = Vector.productVector(first, second);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-            return;
-        }
 
-        string  resultVector = Vector.GetStringFromVector(thirdVector);
-        File.WriteAllText(RESULT_FILE, "Product Vector: (" + resultVector + ")\n");
-
-        try
-        {
-            thirdVector = first.sumVector( second);
+            vectorResult = string.Join("; ", vectorThird);
+            File.AppendAllText(RESULT_FILE, string.Format("{0}: ({1})\n", "Division Vector", vectorResult));
         }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-            return;
-        }
-
-        resultVector = Vector.GetStringFromVector(thirdVector);
-        File.AppendAllText(RESULT_FILE, "Sum Vector:("+resultVector+")\n");
-
-        try
-        {
-            thirdVector = Vector.differenceVector(first, second);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-            return;
-        }
-
-        resultVector = Vector.GetStringFromVector(thirdVector);
-        File.AppendAllText(RESULT_FILE, "Difference Vector:("+resultVector+")\n");
-
-        try
-        {
-            thirdVector = Vector.divisionVector(first, second);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-            return;
-        }
-
-        resultVector = Vector.GetStringFromVector(thirdVector);
-        File.AppendAllText(RESULT_FILE, "Division Vector:("+resultVector+")\n");
-
-
-        
-
     }
-        
-}
 }
