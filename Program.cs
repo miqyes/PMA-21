@@ -1,66 +1,150 @@
-﻿// See https://aka.ms/new-console-template for more information
-using System;
-using System.IO;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.IO;
 
-
-namespace Fibonacci
+namespace ClassMatrixCalculator
 {
     class Program
     {
-        //build all necessary Fibonacci numbers
-        static void Fibonacci(List<int> fibonacciNumbers, int steps)
+        static string MatrixToString(Matrix m)
         {
-            if (steps < 1)
-            {
-                return ;
-            }
-            else
-            {
-                int nextFibonacciNumber = fibonacciNumbers[fibonacciNumbers.Count-1] + fibonacciNumbers[fibonacciNumbers.Count - 2];
+            string result = "";
 
-                fibonacciNumbers.Add(nextFibonacciNumber);
-                Fibonacci(fibonacciNumbers, steps - 1);
+            foreach (List<float> row in m.getMatrix())
+            {
+                foreach (float value in row)
+                {
+                    result += value + " ";
+                }
+
+                result += "\n";
             }
+
+            return result;
         }
 
-        
-        static void Main()
+        static List<List<float>> ReadMatrixFromFile(string fileName)
         {
-            List<int> fibonacciNumbers;
-            int steps;
 
-            //read 2 first Fibonacci numbers
-            string initialNumbersString = File.ReadAllText("C:\\Users\\annal\\RiderProjects\\Fibonacci\\input.txt");
-            List<string> initialNumbersStringList = initialNumbersString.Split(',').ToList();
-            try
+
+
+            string[] matrixRows = File.ReadAllLines(fileName);
+
+            List<List<float>> matrix = new List<List<float>>();
+
+            foreach (string row in matrixRows)
             {
-                fibonacciNumbers = initialNumbersStringList.Select(int.Parse).ToList();
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine("input.txt problem:" + e.Message);
-                return;
+                if (string.IsNullOrWhiteSpace(row))
+                {
+                    continue;
+                }
+
+                List<float> rowElements = row
+                    .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                    .Select(float.Parse)
+                    .ToList();
+
+                matrix.Add(rowElements);
             }
 
-            //read count of all Fibonacci numbers to build
-            string stepsString = File.ReadAllText("C:\\Users\\annal\\RiderProjects\\Fibonacci\\steps.txt");
-            try
+            return matrix;
+        }
+
+
+
+
+
+
+        static void Main()
             {
-                steps = int.Parse(stepsString);
+                const string RESULT_FILE = "resultMatrix.txt";
+                List<List<float>> firstMatrix = new List<List<float>>();
+                List<List<float>> secondMatrix = new List<List<float>>();
+                List<List<float>> thirdMatrix = new List<List<float>>();
+
+                firstMatrix = ReadMatrixFromFile("firstMatrix.txt");
+
+                secondMatrix = ReadMatrixFromFile("secondMatrix.txt");
+
+
+
+                Matrix first = new Matrix(firstMatrix);
+                Matrix second = new Matrix(secondMatrix);
+                Matrix matrix = first;
+                Matrix resultMatrix;
+
+               
+
+                try
+                {
+                    resultMatrix = Matrix.SumMatrix(first, second);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return;
+                }
+
+                File.WriteAllText(RESULT_FILE, "Sum matrix: \n" + MatrixToString(resultMatrix) + "\n");
+
+                try
+                {
+                    resultMatrix = Matrix.ProductMatrix(first, second);
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return;
+                }
+
+                File.AppendAllText(RESULT_FILE, "Product matrix: \n" + MatrixToString(resultMatrix) + "\n");
+
+                try
+                {
+                    resultMatrix = Matrix.DifferenceMatrix(first, second);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return;
+                }
+
+                File.AppendAllText(RESULT_FILE, "Difference matrix: \n" + MatrixToString(resultMatrix) + "\n");
+
+                try
+                {
+                    resultMatrix = Matrix.InverseMatrix(matrix);
+
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return;
+                }
+
+                File.AppendAllText(RESULT_FILE, "Inverse matrix:\n" + MatrixToString(resultMatrix) + "\n");
+
+                try
+                {
+                    resultMatrix = Matrix.DivisionMatrix(first, second);
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return;
+                }
+
+                File.AppendAllText(RESULT_FILE, "Division matrix: \n" + MatrixToString(resultMatrix) + "\n");
+
+
+
+
+
+
             }
-            catch (Exception e)
-            {
-                Console.WriteLine("steps.txt problem: " + e.Message);
-                return;
-            }
-            
-            //we already have 2 numbers, so need steps-2 more
-            Fibonacci(fibonacciNumbers, steps - 2);
-            
-            string outputText = string.Join(", ", fibonacciNumbers);
-            File.WriteAllText("C:\\Users\\annal\\RiderProjects\\Fibonacci\\output.txt", outputText);
-          
         }
     }
-}
