@@ -1,0 +1,14 @@
+Adding
+2 2 
+0 1 
+
+Subtraction
+0 0 
+0 1 
+
+Multiplying
+1 1 
+0 0 
+
+Dividing
+Determinant = 0, impossible to find inverse matrix
