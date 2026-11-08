@@ -1,0 +1,72 @@
+@baseUrl = http://localhost:5180
+@id = 1
+@price = 30000
+
+### 1. Отримати всі телефони
+GET {{baseUrl}}/Phoneitems
+Accept: application/json
+
+### 2. Отримати тільки iPhone
+GET {{baseUrl}}/Phoneitems/Iphone
+Accept: application/json
+
+### 3. Отримати телефони за максимальною ціною
+GET {{baseUrl}}/Phoneitems/price/{{price}}
+Accept: application/json
+
+### 4. Отримати AppleID телефону за ID
+GET {{baseUrl}}/Phoneitems/14/appleid
+Accept: application/json
+
+### 5. Отримати телефон за ID
+GET {{baseUrl}}/Phoneitems/{{id}}
+Accept: application/json
+
+### 6. Створити новий телефон(з AppleID)
+POST {{baseUrl}}/Phoneitems
+Content-Type: application/json
+
+{
+  "name": "iPhone 16",
+  "price": 40000,
+  "battery": 100,
+  "iphone": true,
+  "appleID": "A3293"
+}
+
+### 7. Створити новий телефон(без AppleID)
+POST {{baseUrl}}/Phoneitems
+Content-Type: application/json
+
+{
+  "name": "iPhone 16",
+  "price": 40000,
+  "battery": 100,
+  "iphone": true
+}
+
+### 8. Повністю оновити телефон за ID (PUT)
+PUT {{baseUrl}}/Phoneitems/{{id}}
+Content-Type: application/json
+
+{
+  "name": "iPhone 16 Pro",
+  "price": 50000,
+  "battery": 95,
+  "iphone": true,
+  "appleID": "A3294"
+}
+
+### 9. Частково оновити телефон за ID (PATCH)
+PATCH {{baseUrl}}/Phoneitems/{{id}}
+Content-Type: application/json
+
+{
+  "price": 45000
+}
+
+### 10. Видалити телефон за ID
+DELETE {{baseUrl}}/Phoneitems/{{id}}
+
+### 11. Swagger UI
+GET {{baseUrl}}/swagger
