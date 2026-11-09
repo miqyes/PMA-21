@@ -10,13 +10,13 @@ http:
     type: json
     data: |-
       {
-        "firstName": "Аня",
-        "lastName": "Петренко",
-        "birthDate": "2005-04-12T00:00:00",
+        "firstName": "Андрій",
+        "lastName": "Шевченко",
+        "birthDate": "1997-02-12T00:00:00",
         "grades": [
-          85,
-          92,
-          78
+          64,
+          87,
+          88
         ]
       }
   auth: inherit
