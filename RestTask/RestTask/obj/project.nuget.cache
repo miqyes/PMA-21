@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "LT9sFqhLt+U=",
+  "success": true,
+  "projectFilePath": "/Users/sergij/RiderProjects/RestTask/RestTask/RestTask.csproj",
+  "expectedPackageFiles": [
+    "/Users/sergij/.nuget/packages/microsoft.aspnetcore.openapi/10.0.12/microsoft.aspnetcore.openapi.10.0.12.nupkg.sha512",
+    "/Users/sergij/.nuget/packages/microsoft.openapi/2.12.0/microsoft.openapi.2.12.0.nupkg.sha512",
+    "/Users/sergij/.nuget/packages/npgsql/10.0.3/npgsql.10.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
