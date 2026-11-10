@@ -1,0 +1,15 @@
+C:\Users\srymo\source\repos\ArrayListApp\ArrayListApp\bin\Debug\net10.0\ArrayListApp.exe
+C:\Users\srymo\source\repos\ArrayListApp\ArrayListApp\bin\Debug\net10.0\ArrayListApp.deps.json
+C:\Users\srymo\source\repos\ArrayListApp\ArrayListApp\bin\Debug\net10.0\ArrayListApp.runtimeconfig.json
+C:\Users\srymo\source\repos\ArrayListApp\ArrayListApp\bin\Debug\net10.0\ArrayListApp.dll
+C:\Users\srymo\source\repos\ArrayListApp\ArrayListApp\bin\Debug\net10.0\ArrayListApp.pdb
+C:\Users\srymo\source\repos\ArrayListApp\ArrayListApp\obj\Debug\net10.0\ArrayListApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\srymo\source\repos\ArrayListApp\ArrayListApp\obj\Debug\net10.0\ArrayListApp.AssemblyInfoInputs.cache
+C:\Users\srymo\source\repos\ArrayListApp\ArrayListApp\obj\Debug\net10.0\ArrayListApp.AssemblyInfo.cs
+C:\Users\srymo\source\repos\ArrayListApp\ArrayListApp\obj\Debug\net10.0\ArrayListApp.csproj.CoreCompileInputs.cache
+C:\Users\srymo\source\repos\ArrayListApp\ArrayListApp\obj\Debug\net10.0\ArrayListApp.dll
+C:\Users\srymo\source\repos\ArrayListApp\ArrayListApp\obj\Debug\net10.0\refint\ArrayListApp.dll
+C:\Users\srymo\source\repos\ArrayListApp\ArrayListApp\obj\Debug\net10.0\ArrayListApp.pdb
+C:\Users\srymo\source\repos\ArrayListApp\ArrayListApp\obj\Debug\net10.0\ArrayListApp.genruntimeconfig.cache
+C:\Users\srymo\source\repos\ArrayListApp\ArrayListApp\obj\Debug\net10.0\ref\ArrayListApp.dll
+C:\Users\srymo\source\repos\ArrayListApp\ArrayListApp\obj\Debug\net10.0\ArrayLis.36AD646C.Up2Date

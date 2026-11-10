@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\srymo\\source\\repos\\ArrayListApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FBEC21AD-95F9-E750-35BC-1005AC1CC6CD}|ArrayListApp\\ArrayListApp.csproj|c:\\users\\srymo\\source\\repos\\arraylistapp\\arraylistapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FBEC21AD-95F9-E750-35BC-1005AC1CC6CD}|ArrayListApp\\ArrayListApp.csproj|solutionrelative:arraylistapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBEC21AD-95F9-E750-35BC-1005AC1CC6CD}|ArrayListApp\\ArrayListApp.csproj|c:\\users\\srymo\\source\\repos\\arraylistapp\\arraylistapp\\arraylist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FBEC21AD-95F9-E750-35BC-1005AC1CC6CD}|ArrayListApp\\ArrayListApp.csproj|solutionrelative:arraylistapp\\arraylist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ArrayList.cs",
+              "DocumentMoniker": "C:\\Users\\srymo\\source\\repos\\ArrayListApp\\ArrayListApp\\ArrayList.cs",
+              "RelativeDocumentMoniker": "ArrayListApp\\ArrayList.cs",
+              "ToolTip": "C:\\Users\\srymo\\source\\repos\\ArrayListApp\\ArrayListApp\\ArrayList.cs",
+              "RelativeToolTip": "ArrayListApp\\ArrayList.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-20T19:13:40.995Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\srymo\\source\\repos\\ArrayListApp\\ArrayListApp\\Program.cs",
+              "RelativeDocumentMoniker": "ArrayListApp\\Program.cs",
+              "ToolTip": "C:\\Users\\srymo\\source\\repos\\ArrayListApp\\ArrayListApp\\Program.cs*",
+              "RelativeToolTip": "ArrayListApp\\Program.cs*",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAwBAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-20T19:13:23.227Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
