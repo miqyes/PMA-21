@@ -10,12 +10,12 @@ http:
     type: json
     data: |-
       {
-        "firstName": "Олег",
-        "lastName": "Шевченко",
+        "firstName": "Катерина",
+        "lastName": "Ажнюк",
         "birthDate": "1997-02-12T00:00:00",
         "grades": [
           54,
-          87,
+          97,
           88
         ]
       }

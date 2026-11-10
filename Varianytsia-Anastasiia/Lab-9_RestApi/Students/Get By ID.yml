@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: http://localhost:5000/students/510241d3-88a9-4f5a-8736-a5ad64502cae
+  url: http://localhost:5000/students/e43185c9-498e-4a49-a7a1-7375ad4aebe7
   auth: inherit
 
 settings:
