@@ -1,0 +1,40 @@
+### Отримати список усіх студентів (або конкретного за ID)
+GET http://localhost:5102/api/Student/1
+Accept: application/json
+
+###
+
+### Створити нового студента (POST)
+POST http://localhost:5102/api/Student
+Content-Type: application/json
+
+{
+  "id": 1,
+  "firstName": "Олег",
+  "lastName": "Манько",
+  "group": "ПМА",
+  "groupNumber": 21,
+  "birthDate": {
+    "day": 15,
+    "month": 5,
+    "year": 2005
+  }
+}
+
+###
+
+### Оновлення даних студента (PATCH)
+PATCH http://localhost:5102/api/Student/1
+Content-Type: application/json
+
+{
+  "groupNumber": 22,
+  "birthDate": {
+    "day": 16
+  }
+}
+
+###
+
+### 4. Видалити студента за ID (DELETE)
+DELETE http://localhost:5102/api/Student/13
