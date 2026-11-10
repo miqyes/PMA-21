@@ -1,0 +1,15 @@
+C:\Users\srymo\source\repos\AbstractApp\AbstractApp\bin\Debug\net10.0\AbstractApp.exe
+C:\Users\srymo\source\repos\AbstractApp\AbstractApp\bin\Debug\net10.0\AbstractApp.deps.json
+C:\Users\srymo\source\repos\AbstractApp\AbstractApp\bin\Debug\net10.0\AbstractApp.runtimeconfig.json
+C:\Users\srymo\source\repos\AbstractApp\AbstractApp\bin\Debug\net10.0\AbstractApp.dll
+C:\Users\srymo\source\repos\AbstractApp\AbstractApp\bin\Debug\net10.0\AbstractApp.pdb
+C:\Users\srymo\source\repos\AbstractApp\AbstractApp\obj\Debug\net10.0\AbstractApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\srymo\source\repos\AbstractApp\AbstractApp\obj\Debug\net10.0\AbstractApp.AssemblyInfoInputs.cache
+C:\Users\srymo\source\repos\AbstractApp\AbstractApp\obj\Debug\net10.0\AbstractApp.AssemblyInfo.cs
+C:\Users\srymo\source\repos\AbstractApp\AbstractApp\obj\Debug\net10.0\AbstractApp.csproj.CoreCompileInputs.cache
+C:\Users\srymo\source\repos\AbstractApp\AbstractApp\obj\Debug\net10.0\AbstractApp.dll
+C:\Users\srymo\source\repos\AbstractApp\AbstractApp\obj\Debug\net10.0\refint\AbstractApp.dll
+C:\Users\srymo\source\repos\AbstractApp\AbstractApp\obj\Debug\net10.0\AbstractApp.pdb
+C:\Users\srymo\source\repos\AbstractApp\AbstractApp\obj\Debug\net10.0\AbstractApp.genruntimeconfig.cache
+C:\Users\srymo\source\repos\AbstractApp\AbstractApp\obj\Debug\net10.0\ref\AbstractApp.dll
+C:\Users\srymo\source\repos\AbstractApp\AbstractApp\obj\Debug\net10.0\Abstract.4FEDC13D.Up2Date
