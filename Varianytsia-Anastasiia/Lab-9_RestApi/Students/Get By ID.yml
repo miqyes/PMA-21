@@ -1,0 +1,15 @@
+info:
+  name: Get By ID
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: http://localhost:5000/students/e43185c9-498e-4a49-a7a1-7375ad4aebe7
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

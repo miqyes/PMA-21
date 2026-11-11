@@ -1,0 +1,26 @@
+info:
+  name: Patch By ID
+  type: http
+  seq: 6
+
+http:
+  method: PATCH
+  url: http://localhost:5000/students/e43185c9-498e-4a49-a7a1-7375ad4aebe7
+  body:
+    type: json
+    data: |-
+      { 
+       "lastName": "Карпачова",
+        "grades": [
+          99,
+          56,
+          88
+        ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -1,0 +1,28 @@
+info:
+  name: Create New
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:5000/students/
+  body:
+    type: json
+    data: |-
+      {
+        "firstName": "Катерина",
+        "lastName": "Ажнюк",
+        "birthDate": "1997-02-12T00:00:00",
+        "grades": [
+          54,
+          97,
+          88
+        ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

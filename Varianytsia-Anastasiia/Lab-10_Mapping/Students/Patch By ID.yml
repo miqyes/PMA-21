@@ -1,0 +1,25 @@
+info:
+  name: Patch By ID
+  type: http
+  seq: 6
+
+http:
+  method: PATCH
+  url: http://localhost:5000/students/5b3d4e05-294f-4019-a4ac-3a9b027ff2b4
+  body:
+    type: json
+    data: |-
+      {
+        "grades": [
+          99,
+          95,
+          88
+        ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
