@@ -1,0 +1,40 @@
+@host = http://localhost:5013
+@id = 
+
+### 1. CREATE
+POST {{host}}/api/students
+Content-Type: application/json
+
+{
+  "data": { "name": "Iva", "age": 109 },
+  "group": { "curator": "Іван Пренко", "name": "KN-71" }
+}
+
+### 2. ALL
+GET {{host}}/api/students
+
+### 3. EXACTLY
+GET {{host}}/api/students/{{id}}
+
+### 4. PATCH
+PATCH {{host}}/api/students/{{id}}
+Content-Type: application/json
+
+{ "data": { "age": 20 } }
+
+### 5. PATCH
+PATCH {{host}}/api/students/{{id}}
+Content-Type: application/json
+
+{ "group": { "curator": "Олена Коваль", "name": "KN-31" } }
+
+### 6. PUT
+PUT {{host}}/api/students/{{id}}
+Content-Type: application/json
+
+{
+  "data": { "name": "Ivan Shevchenko", "age": 21 },
+  "group": { "curator": "Іван Петренко", "name":"KH-21"}}
+
+### 7.Delete
+DELETE {{host}}/api/students/{{id}}
