@@ -1,0 +1,6 @@
+Circle 5 Red
+UnknownShape 10 20 Blue
+Square 4 Green
+Triangle 3 4 5 Red
+Rectangle 2 6 Blue
+NonExistent f kh Green
