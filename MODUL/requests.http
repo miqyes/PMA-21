@@ -1,0 +1,96 @@
+@hostA = http://localhost:5107
+@hostB = http://localhost:5099
+
+### 1. Надіслати в ServerA
+POST {{hostA}}/patients
+Content-Type: application/json
+
+{
+  "id": "REC-772",
+  "name": { "first": "Oleh", "last": "Kovalko" },
+  "blood": { "group": "С", "rh": "+" },
+  "birthDate": "1990-05-15",
+  "allergies": [ { "substance": "Penicillin", "severity": "High" } ],
+  "visits": [ { "date": "2023-09-10", "doctor": "Dr. House", "diagnosis": "Flu" } ]
+}
+
+### 2. XML із ServerB 
+GET {{hostB}}/patients/REC-7732/xml
+Accept: application/xml
+
+### 3. Upsert
+POST {{hostA}}/patients
+Content-Type: application/json
+
+{
+  "id": "REC-7732",
+  "name": { "first": "Oleh", "last": "Koval" },
+  "blood": { "group": "A", "rh": "+" },
+  "birthDate": "1985-12-31",
+  "allergies": [
+    { "substance": "Penicillin", "severity": "High" },
+    { "substance": "Peanuts", "severity": "Medium" }
+  ],
+  "visits": [
+    { "date": "2024-02-20", "doctor": "Dr. Wilson", "diagnosis": "Checkup" },
+    { "date": "2023-09-10", "doctor": "Dr. House", "diagnosis": "Flu" }
+  ]
+}
+
+### 4. XML після upsert
+GET {{hostB}}/patients/REC-7732/xml
+Accept: application/xml
+
+### 5. Неіснуючий пацієнт 
+GET {{hostB}}/patients/NOT-EXISTS/xml
+Accept: application/xml
+
+### 6. Прямий виклик ServerB
+POST {{hostB}}/patients
+Content-Type: application/json
+
+{
+  "id": "REC-9999",
+  "name": { "first": "Test", "last": "Direct" },
+  "blood": { "group": "AB", "rh": "+" },
+  "birthDate": "1995-06-20",
+  "allergies": [ { "substance": "Latex", "severity": "Low" } ],
+  "visits": [ { "date": "2024-05-01", "doctor": "Dr. Grey", "diagnosis": "Cold" } ]
+}
+###7. GET всі 
+GET {{hostA}}/patients
+
+
+### 8.PUT
+PUT {{hostA}}/patients/REC-7732
+Content-Type: application/json
+
+{
+  "id": "REC-7732",
+  "name": { "first": "Oleh", "last": "Koval" },
+  "blood": { "group": "B", "rh": "-" },
+  "birthDate": "1990-05-15",
+  "allergies": [],
+  "visits": []
+}
+
+### 9.PATCH
+PATCH {{hostA}}/patients/REC-7732
+Content-Type: application/json
+
+{ "blood": { "group": "O", "rh": "+" } }
+
+###11. PATCH з помилкою валідації (очікується 400)
+PATCH {{hostA}}/patients/REC-7732
+Content-Type: application/json
+
+{ "birthDate": "2090-01-01" }
+
+###12. Перевірити XML після змін 
+GET {{hostB}}/patients/REC-7732/xml
+
+### 13.GET всі ServerB
+GET {{hostB}}/patients
+
+### 14.DELETE 
+DELETE {{hostA}}/patients/REC-7732
